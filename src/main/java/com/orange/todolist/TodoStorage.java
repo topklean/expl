@@ -1,10 +1,15 @@
 package com.orange.todolist;
 
+import java.io.IOException;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONTokener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.orange.todolist.exception.BusinessConcurrencyException;
+import com.orange.todolist.exception.CancellationException;
 
 /**
  * Classe responsable de stoquer la liste des taches rafraichie via {@link #put(String)}
@@ -23,26 +28,25 @@ public abstract class TodoStorage {
 		}
 	}
 	
-	public void put(String todosAsString) throws TodoStorageException{
+	public void put(String todosAsString) throws IOException{
 		validate(todosAsString);
 		JSONTokener tokener = new JSONTokener(todosAsString);
 		try {
 			doPut((JSONArray) tokener.nextValue());
 		} catch (JSONException e) {
-			throw new TodoStorageException(e);
+			throw new IOException(e);
 		}
 	}
 
 	/**
 	 * Met a jour la liste des tâches
 	 * @param todosAsString La liste des tâches sous la formes d'un tableau JSON serialisé 
-	 * @throws TodoStorageException si la valeur n'es tpas correctement formée
 	 */
-	public abstract void doPut(JSONArray todosAsString) throws TodoStorageException;
+	public abstract void doPut(JSONArray todosAsString) throws IOException;
 	
 	/**
 	 * @return les taches sous la forme d'un {@link JSONArray}
 	 */
-	public abstract JSONArray get() throws TodoStorageException ;
+	public abstract JSONArray get() throws IOException ;
 
 }

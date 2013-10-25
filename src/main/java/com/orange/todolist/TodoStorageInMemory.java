@@ -9,9 +9,8 @@ public class TodoStorageInMemory extends TodoStorage{
 	/**
 	 * Met a jour la liste des tâches
 	 * @param todos La liste des tâches sous la formes d'un tableau JSON serialisé 
-	 * @throws TodoStorageException si la valeur n'es tpas correctement formée
 	 */
-	public void doPut(JSONArray todos) throws TodoStorageException {
+	public void doPut(JSONArray todos) {
 		TODOS = todos;
 	}
 	

@@ -14,33 +14,31 @@ import javax.servlet.http.HttpServletResponse;
 public class TodosServlet extends HttpServlet {
 	
 	public TodoStorage getStorageService(){
+		//In Memory storage
 		return new TodoStorageInMemory();
-		//return new TodoStorageJDBC("jdbc:mysql://localhost:3306/database","login","password");
+		
+		//Use Mysql on Kermit
+//		String login = System.getenv("OPENSHIFT_MYSQL_DB_USERNAME");
+//		String password = System.getenv("OPENSHIFT_MYSQL_DB_PASSWORD");
+//		String host = System.getenv("OPENSHIFT_MYSQL_DB_HOST");
+//		String port = System.getenv("OPENSHIFT_MYSQL_DB_PORT");
+//		String database = System.getenv("OPENSHIFT_APP_NAME");
+//		return new TodoStorageJDBCMysql(host, port, database, login, password);
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		String todosAsString = req.getParameter("todos");
-		try {
-			getStorageService().put(todosAsString);
-		} catch (TodoStorageException e) {
-			throw new ServletException(e);
-		}
-		
+		getStorageService().put(todosAsString);
 	}
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		PrintWriter writer = resp.getWriter();
-		try {
-			writer.write(getStorageService().get().toString());
-		} catch (TodoStorageException e) {
-			throw new ServletException(e);
-		}finally{
-			writer.close();
-		}
+		writer.write(getStorageService().get().toString());
+		writer.close();
 	}
 	
 }

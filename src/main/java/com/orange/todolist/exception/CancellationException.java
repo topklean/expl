@@ -1,4 +1,4 @@
-package com.orange.todolist;
+package com.orange.todolist.exception;
 
 public class CancellationException extends RuntimeException {
 

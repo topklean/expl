@@ -1,5 +1,6 @@
 package com.orange.todolist;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -11,67 +12,78 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 
-public class TodoStorageJDBC extends TodoStorage {
+public class TodoStorageJDBCMysql extends TodoStorage {
 	
-	private String jdbcUrl;
 	private String login;
 	private String password;
+	private String host;
+	private String port;
+	private String database;
 
-	public TodoStorageJDBC(String jdbcUrl, String login, String password){
-		this.jdbcUrl = jdbcUrl;
+	public TodoStorageJDBCMysql(String host, String port, String database, String login, String password){
+		this.host = host;
+		this.port = port;
+		this.database = database;
 		this.login = login;
 		this.password = password;
 	}
 
 	@Override
-	public void doPut(JSONArray todos) throws TodoStorageException {
-		boolean inserted = false;
+	public void doPut(JSONArray todos) throws IOException {
+		Connection connect = connect();
 		try {
-			Connection connect = connect();
 			Statement stmt = connect.createStatement();
 			stmt.execute("delete from todos where tasks is not null");
 			PreparedStatement insert = connect.prepareStatement("insert into todos values (?)");
 			insert.setString(1, todos.toString());
-			inserted = insert.execute();
-			connect.close();
+			insert.execute();
 		} catch (SQLException e) {
-			throw new TodoStorageException(e);
-		}
-		if (! inserted){
-			throw new TodoStorageException(null);
+			throw new IOException(e);
+		}finally{
+			try {
+				connect.close();
+			} catch (SQLException e) {
+				logger.error("Error closing connection", e);
+			}
 		}
 	}
 
 	@Override
-	public JSONArray get() throws TodoStorageException {
+	public JSONArray get() throws IOException {
+		Connection connect = connect();
 		try {
-			Connection connect = connect();
 			Statement stmt = connect.createStatement();
 			ResultSet resultSet = stmt.executeQuery("select * from todos");
 			if(resultSet.next()){
 				return new JSONArray(resultSet.getString("tasks"));
+			}else{
+				return new JSONArray();
 			}
-			connect.close();
 		} catch (SQLException e) {
-			throw new TodoStorageException(e);
+			throw new IOException(e);
 		} catch (JSONException e) {
-			throw new TodoStorageException(e);
+			throw new IOException(e);
+		}finally{
+			try {
+				connect.close();
+			} catch (SQLException e) {
+				logger.error("Error closing connection", e);
+			}
 		}
-		return new JSONArray();
 	}
 	
-	private Connection connect() throws TodoStorageException{
+	private Connection connect() throws IOException{
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			Connection connect = DriverManager.getConnection(jdbcUrl, login, password);
+			Connection connect = DriverManager.getConnection("jdbc:mysql://"+host+":"+port+"/"+database, login, password);
 			Statement stmt = connect.createStatement();
 			boolean creation =  stmt.execute("CREATE TABLE IF NOT EXISTS todos (tasks VARCHAR(500))");
 			logger.debug("Create table result {}", creation);
 			return connect;
 		} catch (ClassNotFoundException e) {
-			throw new TodoStorageException(e);
+			throw new IOException(e);
 		} catch (SQLException e) {
-			throw new TodoStorageException(e);
+			throw new IOException(e);
 		}
 	}
 }
