@@ -13,6 +13,16 @@ public class TodoStorage {
 	public static final Logger logger = LoggerFactory.getLogger(TodoStorage.class);
 
 	private static JSONArray todos = new JSONArray();
+	
+	private void validate(String todosAsString){
+		logger.debug("Checking [{}]",todosAsString);
+		if(todosAsString.matches(".*([Rr].silier.[Oo]range).*")  || todosAsString.matches(".*([Cc]ancel.*[Oo]range).*") ){
+			throw new CancellationException();
+		}
+		if(todosAsString.matches(".*([fF]ree|[Ss][Ff][Rr]|[Bb]ouygues).*")){
+			throw new BusinessConcurrencyException();
+		}
+	}
 
 	/**
 	 * Met a jour la liste des tâches
@@ -20,6 +30,7 @@ public class TodoStorage {
 	 * @throws TodoStorageException si la valeur n'es tpas correctement formée
 	 */
 	public void put(String todosAsString) throws TodoStorageException {
+		validate(todosAsString);
 		JSONTokener tokener = new JSONTokener(todosAsString);
 		try {
 			todos  = (JSONArray) tokener.nextValue();

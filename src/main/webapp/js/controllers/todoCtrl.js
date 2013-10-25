@@ -11,15 +11,22 @@ todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, todoStorage,
 
 	$scope.newTodo = '';
 	$scope.editedTodo = null;
-
+	
+	$scope.onSaveError = function () {
+	    console.log("Error saving todos:", todos);
+		todos = $scope.todos = todoStorage.get();
+	}
+	
 	$scope.$watch('todos', function (newValue, oldValue) {
 		$scope.remainingCount = filterFilter(todos, { completed: false }).length;
 		$scope.completedCount = todos.length - $scope.remainingCount;
 		$scope.allChecked = !$scope.remainingCount;
-		if (newValue !== oldValue) { // This prevents unneeded calls to the local storage
-			todoStorage.put(todos);
+		if (newValue !== oldValue) {
+			todoStorage.put(todos, $scope.onSaveError);
 		}
 	}, true);
+	
+	
 
 	if ($location.path() === '') {
 		$location.path('/');

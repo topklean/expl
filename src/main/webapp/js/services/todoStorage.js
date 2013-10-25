@@ -17,12 +17,13 @@ todomvc.factory('todoStorage', function () {
 			return todos;
 		},
 
-		put: function (todos) {
+		put: function (todos, onError) {
 			$.ajax({
 				type: "POST",
 				url:"/todos",
 				data:{todos:JSON.stringify(todos)},
-				async: "false"
+				async: "false",
+				error: onError
 			});
 		}
 	};
