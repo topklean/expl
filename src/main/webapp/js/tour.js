@@ -1,6 +1,7 @@
 // Define the tour!
 var kermitPortableUrl = "https://orangeforge.rd.francetelecom.fr/file/showfiles.php?group_id=4178&release_id=13779";
 var globaldomain = "dev.kermit.rd.francetelecom.fr";
+var publicdomain = "dev.kermit.orange-labs.fr";
 var consoleHome = "https://broker."+globaldomain+"/console/applications/";
 
 var defaultAppName="application_name";
@@ -28,16 +29,26 @@ function getDomain(){
 	return domain;
 }
 
-function getAppUrl(){
+function getAppHttpUrl(){
 	return "http://"+getAppName()+"-"+getDomain()+"."+globaldomain;
 }
+function getPublicDns(){
+	return getAppName()+"-"+getDomain()+"."+publicdomain;
+}
+
+var normalTour;
+var bonusTour;
 
 function createTour(){
-
-	var tour = {
-	  id: "hello-hopscotch",
+	normalTour = {
+	  id: "atelier-base",
 	  bubbleWidth : 400,
 	  bubblePadding : 20,
+	  i18n : {
+		prevBtn:"Prec.",
+		nextBtn:"Suite",
+		doneBtn:"Fin"
+	  },
 	  steps: [
 		{
 		  title: "Cloner le code sur votre PC",
@@ -111,18 +122,58 @@ function createTour(){
 		},
 		{
 		  title: "Redéployer le code",
-		  content: "Popur redéployer le code :<br/>"
+		  content: "Pour redéployer le code :<br/><br/>"
 					+"<code>git push</code><br/><br/>"
-					+"Rendez-vous sur <a href='"+getAppUrl()+"'>Votre application</a><br/><br/>"
+					+"Rendez-vous sur <a href='"+getAppHttpUrl()+"'>Votre application</a><br/><br/>"
 					+"Under the hood :"
 					+"<ul><li>le code est envoyé sur le serveur</li><li>JBoss est coupé</li><li>un build maven est lancé</li><li>Jboss est redémarré</li><li>votre application est prête</li></ul>",
 		  target: "header",
 		  placement: "right",
 		  showPrevButton : true
 		},
+		{
+		  title: "Merci",
+		  content: "Si vous avez fini plus tôt vous pouvez essayer les <button class=\"hopscotch-nav-button next\" onClick='hopscotch.endTour();hopscotch.startTour(createBonusTour());'>Bonus</button><br/><br/>",
+		  target: "header",
+		  placement: "right",
+		  showPrevButton : true
+		}
 	  ]
 	};
-	return tour;
+	return normalTour;
+}
+
+function createBonusTour(){
+	bonusTour = {
+	  id: "atelier-bonus",
+	  bubbleWidth : 400,
+	  bubblePadding : 20,
+	  steps: [{
+		  title: "Debug",
+		  content: "comment debugger une application a distance grâce au port-forwarding ?",
+		  target: "header",
+		  placement: "right",
+		  showPrevButton : true
+		},
+		{
+		  title: "Take the power",
+		  content: "Comment utiliser les hooks pour injecter des données SQL dans mon application ?",
+		  target: "header",
+		  placement: "right",
+		  showPrevButton : true
+		},
+		{
+		  title: "World Wide Web",
+		  content: "Comment publier mon application sur Internet ?<br/><br/>"
+					+"Si vous êtes sur Une instance Kermit qui le propose (Orange Beta), il suffit de faire :<br/><br/>"
+					+"<code>rhc alias add "+getAppName()+" "+getPublicDns()+"</code>",
+		  target: "header",
+		  placement: "right",
+		  showPrevButton : true
+		}
+	   ]
+	};
+	return bonusTour;
 }
 
 document.addEventListener("DOMContentLoaded", function(){
