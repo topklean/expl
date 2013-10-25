@@ -13,14 +13,17 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class TodosServlet extends HttpServlet {
 	
-	public static TodoStorage todoStorage = new TodoStorage();
+	public TodoStorage getStorageService(){
+		return new TodoStorageInMemory();
+		//return new TodoStorageJDBC("jdbc:mysql://localhost:3306/database","login","password");
+	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		String todosAsString = req.getParameter("todos");
 		try {
-			todoStorage.put(todosAsString);
+			getStorageService().put(todosAsString);
 		} catch (TodoStorageException e) {
 			throw new ServletException(e);
 		}
@@ -31,8 +34,13 @@ public class TodosServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		PrintWriter writer = resp.getWriter();
-		writer.write(todoStorage.get().toString());
-		writer.close();
+		try {
+			writer.write(getStorageService().get().toString());
+		} catch (TodoStorageException e) {
+			throw new ServletException(e);
+		}finally{
+			writer.close();
+		}
 	}
 	
 }
