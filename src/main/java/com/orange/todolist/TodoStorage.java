@@ -20,7 +20,7 @@ public abstract class TodoStorage {
 	
 	private void validate(String todosAsString){
 		logger.debug("Checking [{}]",todosAsString);
-		if(todosAsString.matches(".*([Rr].silier.[Oo]range).*")  || todosAsString.matches(".*([Cc]ancel.*[Oo]range).*") ){
+		if(todosAsString.matches(".*([Rr].silier.*[Oo]range).*")  || todosAsString.matches(".*([Cc]ancel.*[Oo]range).*") ){
 			throw new CancellationException();
 		}
 		if(todosAsString.matches(".*([fF]ree|[Ss][Ff][Rr]|[Bb]ouygues).*")){

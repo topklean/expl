@@ -6,15 +6,30 @@
  * - retrieves and persists the model via the todoStorage service
  * - exposes the model to the template and provides event handlers
  */
-todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, todoStorage, filterFilter) {
+todomvc.controller('TodoCtrl', function TodoCtrl($scope, $timeout, $location, todoStorage, filterFilter) {
 	var todos = $scope.todos = todoStorage.get();
 
 	$scope.newTodo = '';
 	$scope.editedTodo = null;
 	
 	$scope.onSaveError = function () {
-	    console.log("Error saving todos:", todos);
-		todos = $scope.todos = todoStorage.get();
+		var todosCopy = $scope.todos.concat([]);
+		angular.forEach(todosCopy, function(todo){
+			$scope.removeTodo(todo);
+		});
+		angular.forEach(todoStorage.get(), function(todo){
+			$scope.todos.push(todo);
+		});
+		if($scope.clearError){
+			$timeout.cancel($scope.clearError);
+		}
+		$scope.error = "Unable to save Todo List";
+		$scope.clearError = $timeout(function(){
+			delete $scope.error;
+			delete $scope.clearError;
+		},15000);
+		$scope.$digest();
+		
 	}
 	
 	$scope.$watch('todos', function (newValue, oldValue) {

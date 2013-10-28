@@ -4,13 +4,17 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<title>AngularJS • TodoMVC</title>
-		<link rel="stylesheet" href="bower_components/todomvc-common/base.css">
 		<link rel="stylesheet" href="hopscotch/css/hopscotch-0.1.2.css">
+		<link rel="stylesheet" href="bower_components/todomvc-common/base.css">
 		<style>[ng-cloak] { display: none; }</style>
 	</head>
 	<body>
+		<img src="kermit.jpg" class="logo"/>
 		<section>
 			<section id="todoapp" ng-controller="TodoCtrl">
+				<span class="error" ng-show="error != undefined" ng-cloak>
+					<strong>Error : </strong>{{error}}
+				</span>
 				<header id="header">
 					<h1>todos</h1>
 					<form id="todo-form" ng-submit="addTodo()">
@@ -53,6 +57,142 @@
 			</section>
 		</section>
 		<footer id="info">
+			
+		
+			<section ng-controller="TourCtrl">
+				<section id="tour" ng-cloak>
+					<button ng-click="startTour('normal', 8)" class="tuto-launcher">Démarrer l'atelier</button>
+					<button ng-click="startTour('bonus', 3)" class="tuto-launcher" ng-show="isBonusVisible">Bonus</button>
+				</section>
+				
+				<section data-tour="normal" style="display:none">
+					<div data-tour-step="1" title="Cloner le code sur votre PC">
+						Pour cloner le code sur votre PC, lancer <a href='{{kermitPortableUrl}}'>Kermit-portable</a> puis faites<br/>
+						<br/>
+						<code class="cmd">rhc git-clone {{appName}}</code><br/>
+						<br/>
+						Remarque : Il se peut qu'une erreur apparaisse<br/>
+						<blockquote>
+							Error while adding config values to git - error: could not lock config file .git/config: No such file or directory
+						</blockquote>
+						Ignorez-la.<br/>
+						<br/>
+						Pour valider cette étape faites <br/>
+						<br/>
+						<code class="cmd">cd {{appName}}</code>
+					</div>
+					<div data-tour-step="2" title="S'amuser avec l'application">
+						Essayez d'ajouter une tâche du type<br/>
+						<p>
+							<b>'Résilier mon abonnement Orange'</b><br/>
+						</p>
+						<p>
+							Ca ne marche pas ? Vous pouvez regarder dans les logs du serveur ce qu'il se passe pendant que vous faites l'ajout
+						</p>
+						<p>
+							<code class="cmd">rhc tail {{appName}}</code><br/>
+						</p>
+						<p>
+							<img style='width:360px' src='errorlogs.png'/>
+						</p>
+					</div>
+					<div data-tour-step="3" title="S'amuser avec l'application (soluce)">
+						Vous n'avez pas compris l'étape précédente  ? <br/>
+						<br/>
+						Vous pouvez regarder directement dans le code du fichier<br/>
+						<br/>
+						<b>src/main/java/com/orange/todolist/TodoStorage.java</b><br/> 
+						<br/>
+						la méthode <code>validate</code> pour mieux comprendre
+					</div>
+					<div data-tour-step="4" title="Je persiste, tu persistes, ...">
+						<p>
+							Actuellement, les todos ne sont sauvegardés que pendant la durée de vie de l'application.
+						</p>
+						<p>
+							<span style='color:red;'>Si vous la redémarrer, vous perdrez vos données.</span>
+						</p>
+						<p>
+							<i>
+								Remarque : vous pouvez tester de redémarrer l'application
+							</i>
+						</p>
+						<p>
+							<code class="cmd">rhc app restart {{appName}}</code>
+						</p>
+						<p>
+							Pour pallier à ce problème ajoutons le support <b>MySQL</b> pour persister ces todos
+						</p>
+					</div>
+					<div data-tour-step="5" title="Support MySQL">
+						Pour ajouter un service MySQL à l'application il faut demander à Kermit de lui associer une 'cartridge' MySQL<br/>
+						<br/>
+						Allez sur la <a target='_blank' href='https://broker.{{globaldomain}}/console/applications/{{appName}}'>page de votre projet</a><br/>
+						<ol>
+							<li>Add Cartridge</li>
+							<li>Select <b>MySQL 5.1</b></li>
+							<li>Add Cartridge</li>
+							<li>Wait</li>
+							<li>Done</li>
+						</ol>"
+						<video src='screecast.avi'></video>
+					</div>
+					<div data-tour-step="6" title="Modifier le code pour MySQL">
+						Ajouter une cartridge ne suffit pas pour stoquer les todos dans mysql<br/>
+						Il va falloir modifier le code (un peu)<br/>
+						<br/>
+						Dans la méthode <b>getStorageService</b> de la classe <b>src/main/java/com/orange/todolist/TodosServlet.java</b><br/>
+						<br/>
+						Commentez l'utilisation de <b>TodoStorageInMemory</b> et décommentez la suite de la méthode (utilisation de <b>TodoStorageJDBCMysql</b>)<br/>
+						<br/>
+						Sauvegardez vos modifications dans git<br/>
+						<br/>
+						<code class="cmd">git commit -am "Passage a MySQL"</code>
+					</div>
+					<div data-tour-step="7" title="Redéployer le code">
+						Pour redéployer le code :<br/>
+						<br/>
+						<code class="cmd">git push</code><br/>
+						<br/>
+						Rendez-vous sur <a href="{{appHttpUrl()}}">Votre application</a><br/>
+						<br/>
+						Under the hood :
+						<ul>
+							<li>le code est envoyé sur le serveur</li>
+							<li>JBoss est coupé</li>
+							<li>un build maven est lancé</li>
+							<li>Jboss est redémarré</li>
+							<li>votre application est prête</li>
+						</ul>
+					</div>
+					<div data-tour-step="8" title="Merci">
+						Si vous avez fini plus tôt vous pouvez essayer les Bonus
+					</div>
+				</section>
+				<section  data-tour="bonus" style="display:none">
+					<div data-tour-step="1" title="Debug">
+						<h4>Activer le mode debug de JBoss<h4>
+						<div class="cmd"><code>touch .openshift/markers/enable_jpda</code></div>
+						<div class="cmd"><code>git add .openshift/markers/enable_jpda</code></div>
+						<div class="cmd"><code>git commit -m "enable jdpa"</code></div>
+						<div class="cmd"><code>git push</code></div>
+						<h4>Forwarder les ports de debug jusqu'à la machine locale</h4>
+						<code class="cmd">rhc port-forward {{appName}}</code>
+						<p>Ensuite, il suffit d'utiliser les capacité de "remote-debug" de votre IDE pour debugger localhost:8787</p>
+						<video src="video/how_to_debug_jboss_applications_on_openshift_480x320.mp4"/>
+					</div>
+					<div data-tour-step="2" title="Take the power">
+						Comment utiliser les hooks pour injecter des données SQL dans mon application ?
+					</div>
+					<div data-tour-step="3" title="World Wide Web">
+						Comment publier mon application sur Internet ?<br/>
+						<br/>
+						Si vous êtes sur Une instance Kermit qui le propose (Orange Beta), il suffit de faire :<br/>
+						<br/>
+						<code class="cmd">rhc alias add {{appName}} {{appPublicDNS()}}</code>
+					</div>
+				</section>
+			</section>
 			<p>Double-click to edit a todo</p>
 			<p>Credits:
 				<a href="http://twitter.com/cburgdorf">Christoph Burgdorf</a>,
@@ -66,12 +206,14 @@
 		<script src="bower_components/jquery/jquery.js"></script>
 		<script src="bower_components/angular/angular.js"></script>
 		<script src="js/app.js"></script>
-		<script src="hopscotch/js/hopscotch-0.1.2.js"></script>
-		<script src="js/tour.js"></script>
 		<script src="js/controllers/todoCtrl.js"></script>
 		<script src="js/services/todoStorage.js"></script>
 		<script src="js/directives/todoFocus.js"></script>
 		<script src="js/directives/todoBlur.js"></script>
 		<script src="js/directives/todoEscape.js"></script>
+		
+		<script src="hopscotch/js/hopscotch-0.1.2.js"></script>
+		<script src="js/controllers/tourCtrl.js"></script>
+		
 	</body>
 </html>
