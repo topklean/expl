@@ -9,7 +9,6 @@
 		<style>[ng-cloak] { display: none; }</style>
 	</head>
 	<body>
-		<img src="kermit.jpg" class="logo"/>
 		<section>
 			<section id="todoapp" ng-controller="TodoCtrl">
 				<span class="error" ng-show="error != undefined" ng-cloak>
@@ -57,8 +56,6 @@
 			</section>
 		</section>
 		<footer id="info">
-			
-		
 			<section ng-controller="TourCtrl">
 				<section id="tour" ng-cloak>
 					<button ng-click="startTour('normal', 8)" class="tuto-launcher">Démarrer l'atelier</button>
@@ -193,15 +190,15 @@
 					</div>
 				</section>
 			</section>
-			<p>Double-click to edit a todo</p>
-			<p>Credits:
-				<a href="http://twitter.com/cburgdorf">Christoph Burgdorf</a>,
-				<a href="http://ericbidelman.com">Eric Bidelman</a>,
-				<a href="http://jacobmumm.com">Jacob Mumm</a> and
-				<a href="http://igorminar.com">Igor Minar</a>
-			</p>
-			<p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
 		</footer>
+		
+		<section class="logo">
+			<span>
+				<div>Librement inspiré de <a href="http://todomvc.com">TodoMVC</a></div>
+				<div>Contacter l'équipe <a href="mailto:codex.kermit-support@rd.francetelecom.com">Kermit</a></div>
+			</span>
+			<img src="kermit.jpg"></img>
+		</section>
 		<script src="bower_components/todomvc-common/base.js"></script>
 		<script src="bower_components/jquery/jquery.js"></script>
 		<script src="bower_components/angular/angular.js"></script>
