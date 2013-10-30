@@ -9,13 +9,14 @@ var showBonus = false;
  */
 todomvc.controller('TourCtrl', function TodoCtrl($scope) {
 	$scope.kermitPortableUrl = "https://orangeforge.rd.francetelecom.fr/file/showfiles.php?group_id=4178&release_id=13779";
-	$scope.globaldomain = "dev.kermit.rd.francetelecom.fr";
-	$scope.publicdomain = "dev.kermit.orange-labs.fr";
+	$scope.globaldomain = "beta.kermit.rd.francetelecom.fr";
+	$scope.publicdomain = "beta.kermit.orange-labs.fr";
 	$scope.consoleHome = "https://broker."+$scope.globaldomain+"/console/applications/";
 	$scope.defaultAppName="application_name";
 	$scope.appName = $scope.defaultAppName;
 	$scope.domain = "demo";
-	
+	$scope.currentStep = -1;
+	$scope.nbSteps = 0;
 	$scope.isBonusVisible = false;
 	
 	$scope.onKonami = function(){
@@ -24,7 +25,7 @@ todomvc.controller('TourCtrl', function TodoCtrl($scope) {
 
 	$scope.init = function(){
 		if($scope.appName == $scope.defaultAppName){
-			//Récupère le domaine ex : atelier-demo.dev.kermit.rd.francetelecom.fr
+			//Récupère le domaine ex : atelier-demo.beta.kermit.rd.francetelecom.fr
 			var host = window.location.host;
 			if( host !== ""){
 				var nameAndDomain = host.split('.')[0].split('-');
@@ -37,6 +38,12 @@ todomvc.controller('TourCtrl', function TodoCtrl($scope) {
 		}
 		console.log("appname = ",$scope.appName);
 		console.log("domain = ",$scope.domain);
+		
+		if(sessionStorage["tour"]){
+			var tourStatus = JSON.parse(sessionStorage["tour"]);
+			$scope.startTour(tourStatus.id, tourStatus.nbSteps);
+			hopscotch.showStep(tourStatus.step);
+		}
 	};
 	
 	$scope.appPublicDNS =function(){
@@ -73,22 +80,62 @@ todomvc.controller('TourCtrl', function TodoCtrl($scope) {
 		for(var i = 1; i<=nbSteps; i++){
 			tour.steps.push($scope.newStep(id,i));
 		};
+	
+		tour.onPrev = tour.onNext = [function(){
+			sessionStorage["tour"] = JSON.stringify({
+				id : id,
+				nbSteps : nbSteps,
+				step : hopscotch.getCurrStepNum()
+			});
+			$scope.currentStep =  hopscotch.getCurrStepNum();
+			console.log("onPrev or onNext");
+			if(!$scope.$$phase) {$scope.$digest()};
+
+		}]
+		
+		tour.onEnd = tour.onClose = function(){
+			delete sessionStorage["tour"];
+			$scope.currentStep = -1;
+			$scope.nbSteps = 0;
+			console.log("onEnd or onClose");
+			if(!$scope.$$phase) {$scope.$digest()};
+		}
 		
 		if(id == 'normal'){
-			tour.onNext = function(){
+			tour.onNext.push(
+				function(){
 				if(hopscotch.getCurrStepNum() == (nbSteps-1)){
 					console.log("bonus is now visible");
 					$scope.isBonusVisible = true;
-					$scope.$digest();
+					if(!$scope.$$phase) {$scope.$digest()};
 				};
-			};
+			});
 		};
 		
 		return tour;
 	};
 	
+	$scope.stepNumbers = function(){
+		var range = [];
+		for(var i=1;i<=$scope.nbSteps;i++){
+			range.push(i);
+		}
+		return range;
+	}
+	
+	$scope.stepClass = function(step){
+		if(hopscotch.getCurrStepNum() >= step){
+			return "done";
+		}
+		if(hopscotch.getCurrStepNum() == step-1){
+			return "current";
+		}
+		return "notdone";
+	}
+	
 	$scope.startTour = function(id, nbSteps){
 		hopscotch.endTour();
+		$scope.nbSteps = nbSteps;
 		hopscotch.startTour($scope.newTour(id,nbSteps));
 	};
 	

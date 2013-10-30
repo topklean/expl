@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>AngularJS • TodoMVC</title>
+		<title>Atelier Kermit • TodoMVC</title>
 		<link rel="stylesheet" href="hopscotch/css/hopscotch-0.1.2.css">
 		<link rel="stylesheet" href="bower_components/todomvc-common/base.css">
 		<style>[ng-cloak] { display: none; }</style>
@@ -62,9 +62,17 @@
 					<button ng-click="startTour('bonus', 3)" class="tuto-launcher" ng-show="isBonusVisible">Bonus</button>
 				</section>
 				
+				<section id="ariane" ng-cloak>
+					<ul>
+						<li ng-repeat="stepNumber in stepNumbers()">
+							<span ng-class="stepClass(stepNumber)">{{stepNumber}}</span>
+						</li>
+					</ul>
+				</section>
+				
 				<section data-tour="normal" style="display:none">
 					<div data-tour-step="1" title="Cloner le code sur votre PC">
-						Pour cloner le code sur votre PC, lancer <a href='{{kermitPortableUrl}}'>Kermit-portable</a> puis faites<br/>
+						Pour cloner le code sur votre PC, lancer <a href='{{kermitPortableUrl}}' target="_blank">Kermit-portable</a> puis faites<br/>
 						<br/>
 						<code class="cmd">rhc git-clone {{appName}}</code><br/>
 						<br/>
@@ -135,7 +143,7 @@
 						<video src="video/mysql.mp4" controls></video>
 					</div>
 					<div data-tour-step="6" title="Modifier le code pour MySQL">
-						Ajouter une cartridge ne suffit pas pour stoquer les todos dans mysql<br/>
+						Ajouter une cartridge ne suffit pas pour stocker les todos dans mysql<br/>
 						Il va falloir modifier le code (un peu)<br/>
 						<br/>
 						Dans la méthode <b>getStorageService</b> de la classe <b>src/main/java/com/orange/todolist/TodosServlet.java</b><br/>
@@ -149,7 +157,7 @@
 					<div data-tour-step="7" title="Redéployer le code">
 						Pour redéployer le code :<br/>
 						<br/>
-						<code class="cmd">git push</code><br/>
+						<code class="cmd">git push</code> (attendre la fin d'éxecution de la commande)<br/>
 						<br/>
 						Rendez-vous sur <a href="{{appHttpUrl()}}">Votre application</a><br/>
 						<br/>
@@ -169,6 +177,7 @@
 				<section  data-tour="bonus" style="display:none">
 					<div data-tour-step="1" title="Debug">
 						<h4>Activer le mode debug de JBoss<h4>
+						A la racine du projet, faire:
 						<div class="cmd"><code>touch .openshift/markers/enable_jpda</code></div>
 						<div class="cmd"><code>git add .openshift/markers/enable_jpda</code></div>
 						<div class="cmd"><code>git commit -m "enable jdpa"</code></div>
@@ -176,7 +185,6 @@
 						<h4>Forwarder les ports de debug jusqu'à la machine locale</h4>
 						<code class="cmd">rhc port-forward {{appName}}</code>
 						<p>Ensuite, il suffit d'utiliser les capacité de "remote-debug" de votre IDE pour debugger localhost:8787</p>
-						<video src="video/how_to_debug_jboss_applications_on_openshift_480x320.mp4"/>
 					</div>
 					<div data-tour-step="2" title="Take the power">
 						Comment utiliser les hooks pour injecter des données SQL dans mon application ?
