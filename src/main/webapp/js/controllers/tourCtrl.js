@@ -133,6 +133,10 @@ todomvc.controller('TourCtrl', function TodoCtrl($scope) {
 		return "notdone";
 	}
 	
+	$scope.setStep = function(index){
+		hopscotch.showStep(index);
+	}
+	
 	$scope.startTour = function(id, nbSteps){
 		hopscotch.endTour();
 		$scope.nbSteps = nbSteps;

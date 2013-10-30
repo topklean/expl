@@ -59,13 +59,13 @@
 			<section ng-controller="TourCtrl">
 				<section id="tour" ng-cloak>
 					<button ng-click="startTour('normal', 10)" class="tuto-launcher">Démarrer l'atelier</button>
-					<button ng-click="startTour('bonus', 3)" class="tuto-launcher" ng-show="isBonusVisible">Bonus</button>
+					<button ng-click="startTour('bonus', 4)" class="tuto-launcher" ng-show="isBonusVisible">Bonus</button>
 				</section>
 				
 				<section id="ariane" ng-cloak>
 					<ul>
 						<li ng-repeat="stepNumber in stepNumbers()">
-							<span ng-class="stepClass(stepNumber)">{{stepNumber}}</span>
+							<span ng-class="stepClass(stepNumber)" ng-click="setStep($index)">{{stepNumber}}</span>
 						</li>
 					</ul>
 				</section>
@@ -218,9 +218,30 @@
 						<p>Ensuite, il suffit d'utiliser les capacité de "remote-debug" de votre IDE pour debugger localhost:8787</p>
 					</div>
 					<div data-tour-step="2" title="Take the power">
-						Comment utiliser les hooks pour injecter des données SQL dans mon application ?
+						Actuellement, le code applicatif s'assure que les tables Mysql dont on a besoin sont présentes (et les créées au premier lancement avec une base vide)
+						<br/><br/>
+						Pour ce genre de problèmatique, il existe une solution basée sur les <b>Action Hooks</b>.
+						<br/><br/>
+						Ces hooks permettent d'éxecuter des scripts durant certaines phases (build, deploy,...) directement sur les machines sur lequelles les applications sont hebergées.
+						<br/><br/>
+						Passons à l'action.
 					</div>
-					<div data-tour-step="3" title="World Wide Web">
+					<div data-tour-step="3" title="Take the power">
+						A la racine du projet, regardez par exemple le fichier <b>.openshift/action_hooks/pre_start_jbossews-2.0</b> 
+						qui comme son nom l'indique est exécuté <b>avant chaque démarrage de jbossews</b>.
+						<br/><br/>
+						Dans ce fichier, une ligne est commentée qui execute un script mysql sur l'instance MySQL associée à notre application (la cartridge MySQL)<br/>
+						<br/>
+						<small>
+						Remarque : au sein des action_hooks comme lorsque vous faites du SSH sur votre application, vous avez accès aux variables d'environnement injectées par les cartridges (ici les "login:password@host:port/database")
+						</small>
+						<br/><br/>
+						Le script fait référence à un script sql contenu dans <b>src/main/openshift/init.sql</b>
+						<br/><br/>
+						Décommentez les lignes commentées, poussez le code sur votre application (git add...commit...push..etc.)
+						<br/><br/>Observez les logs du git push
+					</div>
+					<div data-tour-step="4" title="World Wide Web">
 						Comment publier mon application sur Internet ?<br/>
 						<br/>
 						Si vous êtes sur Une instance Kermit qui le propose (Orange Beta), il suffit de faire :<br/>
