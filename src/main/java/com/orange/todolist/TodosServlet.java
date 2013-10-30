@@ -36,6 +36,7 @@ public class TodosServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		resp.setHeader("Access-Control-Allow-Origin", "*");
 		PrintWriter writer = resp.getWriter();
 		writer.write(getStorageService().get().toString());
 		writer.close();
