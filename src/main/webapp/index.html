@@ -58,7 +58,7 @@
 		<footer id="info">
 			<section ng-controller="TourCtrl">
 				<section id="tour" ng-cloak>
-					<button ng-click="startTour('normal', 8)" class="tuto-launcher">Démarrer l'atelier</button>
+					<button ng-click="startTour('normal', 10)" class="tuto-launcher">Démarrer l'atelier</button>
 					<button ng-click="startTour('bonus', 3)" class="tuto-launcher" ng-show="isBonusVisible">Bonus</button>
 				</section>
 				
@@ -71,7 +71,40 @@
 				</section>
 				
 				<section data-tour="normal" style="display:none">
-					<div data-tour-step="1" title="Cloner le code sur votre PC">
+					<div data-tour-step="1" title="Prise en main">
+						<div>Si vous ne l'avez pas encore fait, prennez le temps de manipuler la todo-list à gauche.</div>
+						<br/>
+						<div>Ajoutez, supprimez, fermez ou encore modifiez des tâches.</div>
+						<br/>
+						<div>Une fois que vous avez compris le fonctionnement de l'application, passez à l'étape suivante</div>
+					</div>
+					<div data-tour-step="2" title="Outillage">
+						Si ce n'est pas déjà le cas sur votre ordinateur, il faut installer un peu d'outillage pour pouvoir jouer avec Kermit.<br/>
+						Pour cela vous avez 2 options :
+						<ul>
+							<li>
+								<div>Installer <b>Kermit Portable</b> (Windows only) :</div>
+								<ol>
+									<li>Télécharger la <b>dernière version</b> de <a href="https://orangeforge.rd.francetelecom.fr/file/showfiles.php?group_id=4178">Kermit Portable</a></li>
+									<li>Dézipper l'archive sur votre poste</li>
+									<li>Lancez le script <b>Kermit.cmd</b></li>
+								</ol>
+							</li>
+						</ul>
+						<ul>
+							<li>
+								<div>Installer <b>manuellement</b> chaque outil* en suivant le <a href="https://orangeforge.rd.francetelecom.fr/plugins/mediawiki/wiki/kermit/index.php/Pr%C3%A9parer_le_poste_client_de_l%27utilisateur#Proc.C3.A9dure_manuelle">guide</a>
+								<ul>
+									<li>git & ssh</li>
+									<li>rhc</li>
+									<li>proxytunnel</li>
+									<li>...</li>
+								</ul>
+							</li>
+						</ul>
+						*utile si vous voulez intégrer kermit à votre outillage existant
+					</div>
+					<div data-tour-step="3" title="Cloner le code sur votre PC">
 						Pour cloner le code sur votre PC, lancer <a href='{{kermitPortableUrl}}' target="_blank">Kermit-portable</a> puis faites<br/>
 						<br/>
 						<code class="cmd">rhc git-clone {{appName}}</code><br/>
@@ -86,7 +119,7 @@
 						<br/>
 						<code class="cmd">cd {{appName}}</code>
 					</div>
-					<div data-tour-step="2" title="S'amuser avec l'application">
+					<div data-tour-step="4" title="S'amuser avec l'application">
 						Essayez d'ajouter une tâche du type<br/>
 						<p>
 							<b>'Résilier mon abonnement Orange'</b><br/>
@@ -101,16 +134,14 @@
 							<img style='width:360px' src='errorlogs.png'/>
 						</p>
 					</div>
-					<div data-tour-step="3" title="S'amuser avec l'application (soluce)">
+					<div data-tour-step="5" title="S'amuser avec l'application (soluce)">
 						Vous n'avez pas compris l'étape précédente  ? <br/>
 						<br/>
-						Vous pouvez regarder directement dans le code du fichier<br/>
+						Pour mieux comprendre, vous pouvez regarder directement la méthode <code>validate</code> dans le code du fichier<br/>
 						<br/>
-						<b>src/main/java/com/orange/todolist/TodoStorage.java</b><br/> 
-						<br/>
-						la méthode <code>validate</code> pour mieux comprendre
+						<b>src/main/java/com/orange/todolist/TodoStorage.java</b>
 					</div>
-					<div data-tour-step="4" title="Je persiste, tu persistes, ...">
+					<div data-tour-step="6" title="Je persiste, tu persistes, ...">
 						<p>
 							Actuellement, les todos ne sont sauvegardés que pendant la durée de vie de l'application.
 						</p>
@@ -129,7 +160,7 @@
 							Pour pallier à ce problème ajoutons le support <b>MySQL</b> pour persister ces todos
 						</p>
 					</div>
-					<div data-tour-step="5" title="Support MySQL">
+					<div data-tour-step="7" title="Support MySQL">
 						Pour ajouter un service MySQL à l'application il faut demander à Kermit de lui associer une 'cartridge' MySQL<br/>
 						<br/>
 						Allez sur la <a target='_blank' href='https://broker.{{globaldomain}}/console/applications/{{appName}}'>page de votre projet</a><br/>
@@ -142,7 +173,7 @@
 						</ol>
 						<video src="video/mysql.mp4" controls></video>
 					</div>
-					<div data-tour-step="6" title="Modifier le code pour MySQL">
+					<div data-tour-step="8" title="Modifier le code pour MySQL">
 						Ajouter une cartridge ne suffit pas pour stocker les todos dans mysql<br/>
 						Il va falloir modifier le code (un peu)<br/>
 						<br/>
@@ -154,7 +185,7 @@
 						<br/>
 						<code class="cmd">git commit -am "Passage a MySQL"</code>
 					</div>
-					<div data-tour-step="7" title="Redéployer le code">
+					<div data-tour-step="9" title="Redéployer le code">
 						Pour redéployer le code :<br/>
 						<br/>
 						<code class="cmd">git push</code> (attendre la fin d'éxecution de la commande)<br/>
@@ -170,7 +201,7 @@
 							<li>votre application est prête</li>
 						</ul>
 					</div>
-					<div data-tour-step="8" title="Merci">
+					<div data-tour-step="10" title="Merci">
 						Si vous avez fini plus tôt vous pouvez essayer les Bonus
 					</div>
 				</section>
