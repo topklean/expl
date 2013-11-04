@@ -725,6 +725,7 @@ div.hopscotch-bubble .hopscotch-bubble-content{
 	opacity:0.5;
 	background-color:grey;
 	transition: all 0.3s linear;
+	cursor:pointer;
 }
 #ariane ul li span.done{
 	opacity:1;

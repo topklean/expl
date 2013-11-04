@@ -23,6 +23,9 @@ todomvc.controller('TourCtrl', function TodoCtrl($scope, $timeout) {
 		$scope.startTour('bonus',3);
 	}
 
+	/*
+		Initialize tour with appName and domain extracted form actual URL
+	*/
 	$scope.init = function(){
 		if($scope.appName == $scope.defaultAppName){
 			//Récupère le domaine ex : atelier-demo.beta.kermit.rd.francetelecom.fr
@@ -40,6 +43,9 @@ todomvc.controller('TourCtrl', function TodoCtrl($scope, $timeout) {
 		console.log("domain = ",$scope.domain);
 	};
 	
+	/*
+		Restart tour to the last known position based on sessionStorage status
+	*/
 	$scope.restartToLastPosition = function(){
 		if(sessionStorage["tour"]){
 			
@@ -107,14 +113,13 @@ todomvc.controller('TourCtrl', function TodoCtrl($scope, $timeout) {
 		}
 		
 		if(id == 'normal'){
-			tour.onNext.push(
-				function(){
+			tour.onShow = function(){
 				if(hopscotch.getCurrStepNum() == (nbSteps-1)){
-					console.log("bonus is now visible");
+					console.log("bonus are now visible");
 					$scope.isBonusVisible = true;
 					if(!$scope.$$phase) {$scope.$digest()};
 				};
-			});
+			};
 		};
 		
 		return tour;
