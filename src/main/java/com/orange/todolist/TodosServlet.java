@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Unique servlet responsable de répondre aux GET/POST HTTP sur /todos
+ * Unique servlet responsable de rÃ©pondre aux GET/POST HTTP sur /todos
  */
 public class TodosServlet extends HttpServlet {
 	
