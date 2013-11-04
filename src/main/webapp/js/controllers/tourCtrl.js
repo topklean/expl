@@ -7,7 +7,7 @@ var showBonus = false;
  * - retrieves and persists the model via the todoStorage service
  * - exposes the model to the template and provides event handlers
  */
-todomvc.controller('TourCtrl', function TodoCtrl($scope) {
+todomvc.controller('TourCtrl', function TodoCtrl($scope, $timeout) {
 	$scope.kermitPortableUrl = "https://orangeforge.rd.francetelecom.fr/file/showfiles.php?group_id=4178&release_id=13779";
 	$scope.globaldomain = "beta.kermit.rd.francetelecom.fr";
 	$scope.publicdomain = "beta.kermit.orange-labs.fr";
@@ -38,8 +38,13 @@ todomvc.controller('TourCtrl', function TodoCtrl($scope) {
 		}
 		console.log("appname = ",$scope.appName);
 		console.log("domain = ",$scope.domain);
-		
+	};
+	
+	$scope.restartToLastPosition = function(){
 		if(sessionStorage["tour"]){
+			
+			console.log("starting tour for appname = ",$scope.appName);
+			console.log("starting tour for domain = ",$scope.domain);
 			var tourStatus = JSON.parse(sessionStorage["tour"]);
 			$scope.startTour(tourStatus.id, tourStatus.nbSteps);
 			hopscotch.showStep(tourStatus.step);
@@ -144,6 +149,8 @@ todomvc.controller('TourCtrl', function TodoCtrl($scope) {
 	};
 	
 	$scope.init();
+	//Render dom before creating tour static step HTML
+	$timeout($scope.restartToLastPosition, 10);
 	
 	$(function(){
 		var kKeys = [];
