@@ -128,7 +128,7 @@
 							Ca ne marche pas ? Vous pouvez regarder dans les logs du serveur ce qu'il se passe pendant que vous faites l'ajout
 						</p>
 						<p>
-							<code class="cmd">rhc tail {{appName}}</code> (CTRL+C pour arrêter le tail)<br/>
+							<code class="cmd">rhc tail {{appName}}</code> <i>(<b>CTRL+C</b> pour arrêter le tail)</i><br/>
 						</p>
 						<p>
 							<img style='width:360px' src='errorlogs.png'/>
@@ -200,6 +200,8 @@
 						</ul>
 						<br/>
 						Rendez-vous sur <a href="{{appHttpUrl()}}">Votre application</a>
+						<br/><br/>
+						Vous pouvez dorénavant ajouter/supprimer/éditer des tâche puis redémarrer l'application et constater que les données sont persistantes
 					</div>
 					<div data-tour-step="10" title="Merci">
 						Si vous avez fini plus tôt vous pouvez essayer les Bonus
@@ -207,22 +209,27 @@
 				</section>
 				<section  data-tour="bonus" style="display:none">
 					<div data-tour-step="1" title="Debug">
-						<h4>Activer le mode debug de JBoss<h4>
-						A la racine du projet, faire:
+						Pour débugguer une application depuis votre IDE, il faudra activer JPDA sur JBoss puis se connecter aux ports de debug depuis votre IDE
+						<h4>Activer le mode debug de JBoss</h4>
+						<p>Pour activer le support JPDA sur une instance Kermit, il faut utiliser les <b>markers</b>. Ces fichiers permettent entre autre de configurer les cartridges que votre application utilise.</p>
+						<p>Dans notre cas, à la racine du projet, il faut faire :</p>
 						<div class="cmd"><code>touch .openshift/markers/enable_jpda</code></div>
 						<div class="cmd"><code>git add .openshift/markers/enable_jpda</code></div>
 						<div class="cmd"><code>git commit -m "enable jdpa"</code></div>
 						<div class="cmd"><code>git push</code></div>
 						<h4>Forwarder les ports de debug jusqu'à la machine locale</h4>
+						<p>Une fois que l'application a redémarré, les ports JPDA sont en écoute sur l'application. 
+						Cependant, il est impossible de joindre ces ports qui sont attachés à des IP internes à Kermit. </p>
+						<p>Pour les joindre, il va falloir utiliser le mécanisme de <b>port-forwarding</b> en lançant :</p>
 						<code class="cmd">rhc port-forward {{appName}}</code>
-						<p>Ensuite, il suffit d'utiliser les capacité de "remote-debug" de votre IDE pour debugger localhost:8787</p>
+						<p>Ensuite, il suffit de lancer une session de <b>remote-debug</b> depuis votre IDE pour debugger <b>localhost:8787</b></p>
 					</div>
 					<div data-tour-step="2" title="Take the power">
 						Actuellement, le code applicatif s'assure que les tables Mysql dont on a besoin sont présentes (et les créées au premier lancement avec une base vide)
 						<br/><br/>
-						Pour ce genre de problèmatique, il existe une solution basée sur les <b>Action Hooks</b>.
+						Pour éviter d'avoir à prendre cette problématique en charge au sein du code Java, il est possible d'utiliser les <b>Action Hooks</b>.
 						<br/><br/>
-						Ces hooks permettent d'éxecuter des scripts durant certaines phases (build, deploy,...) directement sur les machines sur lequelles les applications sont hebergées.
+						Ces hooks permettent d'éxecuter des scripts durant certaines phases (build, deploy,...) directement sur les machines sur lequelles les applications sont hebergées.<br/>
 						<br/><br/>
 						Passons à l'action.
 					</div>
@@ -244,7 +251,7 @@
 					<div data-tour-step="4" title="World Wide Web">
 						Comment publier mon application sur Internet ?<br/>
 						<br/>
-						Si vous êtes sur Une instance Kermit qui le propose (Orange Beta), il suffit de faire :<br/>
+						Si vous êtes sur une instance Kermit qui le propose (Orange Beta), il suffit de faire :<br/>
 						<br/>
 						<code class="cmd">rhc alias add {{appName}} {{appPublicDNS()}}</code>
 					</div>

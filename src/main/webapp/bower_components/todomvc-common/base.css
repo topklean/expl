@@ -89,8 +89,8 @@ body {
 body .logo{
 	/*position:absolute;*/
 	position:fixed;
-    bottom:0;
-    right:0;
+    bottom:0px;
+    right:0px;
 	margin-bottom:10px;
 	color: #777;
 	padding: 0 10px;
@@ -101,6 +101,12 @@ body .logo{
 	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
 	text-align: center;
 	opacity:0.4;
+	
+	-webkit-transition: all 2s ease-in-out;
+	-moz-transition: all 2s ease-in-out;
+	-ms-transition: all 2s ease-in-out;
+	-o-transition: all 2s ease-in-out;
+	transition: all 2s ease-in-out;
 }
 
 body .logo a{
@@ -112,10 +118,21 @@ body .logo img{
 	vertical-align: bottom;
 	margin-left: 10px;
 	z-index:-10;
-	-webkit-filter: grayscale(100%);
-	-moz-filter: grayscale(100%);
-	filter: grayscale(100%);
+	-webkit-filter: grayscale(50%) hue-rotate(-46deg);
+	-moz-filter: grayscale(50%) hue-rotate(-46deg);
+	filter: grayscale(50%) hue-rotate(-46deg);
 	box-shadow: 3px 3px 3px #000000;
+}
+
+
+body .logo.konami {
+	opacity:1.0;
+}
+
+body .logo.konami img{
+	-webkit-filter:  hue-rotate(-46deg);
+	-moz-filter:  hue-rotate(-46deg);
+	filter:  hue-rotate(-46deg);
 }
 
 body .logo span{

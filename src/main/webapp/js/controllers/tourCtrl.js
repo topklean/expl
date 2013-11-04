@@ -1,12 +1,5 @@
-/*global todomvc, angular */
 'use strict';
-var showBonus = false;
 
-/**
- * The main controller for the app. The controller:
- * - retrieves and persists the model via the todoStorage service
- * - exposes the model to the template and provides event handlers
- */
 todomvc.controller('TourCtrl', function TodoCtrl($scope, $timeout) {
 	$scope.kermitPortableUrl = "https://orangeforge.rd.francetelecom.fr/file/showfiles.php?group_id=4178&release_id=13779";
 	$scope.globaldomain = "beta.kermit.rd.francetelecom.fr";
@@ -20,7 +13,7 @@ todomvc.controller('TourCtrl', function TodoCtrl($scope, $timeout) {
 	$scope.isBonusVisible = false;
 	
 	$scope.onKonami = function(){
-		$scope.startTour('bonus',3);
+		$(".logo").addClass("konami");
 	}
 
 	/*
@@ -92,7 +85,7 @@ todomvc.controller('TourCtrl', function TodoCtrl($scope, $timeout) {
 			tour.steps.push($scope.newStep(id,i));
 		};
 	
-		tour.onPrev = tour.onNext = [function(){
+		tour.onShow = [function(){
 			sessionStorage["tour"] = JSON.stringify({
 				id : id,
 				nbSteps : nbSteps,
@@ -113,13 +106,13 @@ todomvc.controller('TourCtrl', function TodoCtrl($scope, $timeout) {
 		}
 		
 		if(id == 'normal'){
-			tour.onShow = function(){
+			tour.onShow.push(function(){
 				if(hopscotch.getCurrStepNum() == (nbSteps-1)){
 					console.log("bonus are now visible");
 					$scope.isBonusVisible = true;
 					if(!$scope.$$phase) {$scope.$digest()};
 				};
-			};
+			});
 		};
 		
 		return tour;
