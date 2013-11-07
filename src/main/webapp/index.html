@@ -58,7 +58,7 @@
 		<footer id="info">
 			<section ng-controller="TourCtrl">
 				<section id="tour" ng-cloak>
-					<button ng-click="startTour('normal', 10)" class="tuto-launcher">Démarrer l'atelier</button>
+					<button ng-click="startTour('normal', 11)" class="tuto-launcher">Démarrer l'atelier</button>
 					<button ng-click="startTour('bonus', 5)" class="tuto-launcher" ng-show="isBonusVisible">Bonus</button>
 				</section>
 				
@@ -118,8 +118,18 @@
 						Pour valider cette étape faites <br/>
 						<br/>
 						<code class="cmd">cd {{appName}}</code>
+						<br/>
 					</div>
-					<div data-tour-step="4" title="S'amuser avec l'application">
+					<div data-tour-step="4" title="Importer et consulter le code">
+						Localiser le code sur votre PC (cf. prompt de la commande)<br/>
+						<br/>
+						Lancer Eclipse (ou l'IDE de votre choix) et importer le code<br/>
+						<br/>
+						Avec Eclipse vous pouvez au choix "importer un projet existant" ou "importer un projet maven"
+						<br/>
+						<br/>
+					</div>					
+					<div data-tour-step="5" title="S'amuser avec l'application">
 						Essayez d'ajouter une tâche du type<br/>
 						<p>
 							<b>'Résilier mon abonnement Orange'</b><br/>
@@ -134,14 +144,14 @@
 							<img style='width:360px' src='errorlogs.png'/>
 						</p>
 					</div>
-					<div data-tour-step="5" title="S'amuser avec l'application (soluce)">
+					<div data-tour-step="6" title="S'amuser avec l'application (soluce)">
 						Vous n'avez pas compris l'étape précédente  ? <br/>
 						<br/>
 						Pour mieux comprendre, vous pouvez regarder directement la méthode <code>validate</code> dans le code du fichier<br/>
 						<br/>
 						<b>src/main/java/com/orange/todolist/TodoStorage.java</b>
 					</div>
-					<div data-tour-step="6" title="Je persiste, tu persistes, ...">
+					<div data-tour-step="7" title="Je persiste, tu persistes, ...">
 						<p>
 							Actuellement, les todos ne sont sauvegardés que pendant la durée de vie de l'application.
 						</p>
@@ -160,7 +170,7 @@
 							Pour pallier à ce problème ajoutons le support <b>MySQL</b> pour persister ces todos
 						</p>
 					</div>
-					<div data-tour-step="7" title="Support MySQL">
+					<div data-tour-step="8" title="Support MySQL">
 						Pour ajouter un service MySQL à l'application il faut demander à Kermit de lui associer une 'cartridge' MySQL<br/>
 						<br/>
 						Allez sur la <a target='_blank' href='https://broker.{{globaldomain}}/console/applications/{{appName}}'>page de votre projet</a><br/>
@@ -173,7 +183,7 @@
 						</ol>
 						<video src="video/mysql.mp4" controls></video>
 					</div>
-					<div data-tour-step="8" title="Modifier le code pour MySQL">
+					<div data-tour-step="9" title="Modifier le code pour MySQL">
 						Ajouter une cartridge ne suffit pas pour stocker les todos dans mysql<br/>
 						Il va falloir modifier le code (un peu)<br/>
 						<br/>
@@ -185,7 +195,7 @@
 						<br/>
 						<code class="cmd">git commit -am "Passage a MySQL"</code>
 					</div>
-					<div data-tour-step="9" title="Redéployer le code">
+					<div data-tour-step="10" title="Redéployer le code">
 						Pour redéployer le code :<br/>
 						<br/>
 						<code class="cmd">git push</code> (attendre la fin d'éxecution de la commande)<br/>
@@ -203,7 +213,7 @@
 						<br/><br/>
 						Vous pouvez dorénavant ajouter/supprimer/éditer des tâche puis redémarrer l'application et constater que les données sont persistantes
 					</div>
-					<div data-tour-step="10" title="Merci">
+					<div data-tour-step="11" title="Merci">
 						Si vous avez fini plus tôt vous pouvez essayer les Bonus
 					</div>
 				</section>
