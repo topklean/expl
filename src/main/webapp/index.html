@@ -223,13 +223,13 @@
 						<br/>
 						<code class="cmd">rhc ssh {{appName}}</code><br/>
 						<br/>
-						Vous avez accès à un shell restreint qui vous permet par exemple de visualiser les variables d'environnement disponibles
+						Vous avez accès à un shell restreint qui vous permet, par exemple, de visualiser les variables d'environnement disponibles
 						<br/><br/>
 						<code class="cmd">env</code><br/>
 						<br/>
 						N'hésitez pas à tester d'autres commandes et à vous ballader dans l'arborescence<br/>
 						<br/>
-						(utilisez "exit" pour quitter votre session ssh)
+						Utilisez <code>exit</code> pour quitter votre session <b>ssh</b>
 					</div>
 					<div data-tour-step="2" title="Take the power">
 						Actuellement, le code applicatif s'assure que les tables Mysql dont on a besoin sont présentes (et les créées au premier lancement avec une base vide)
@@ -237,6 +237,8 @@
 						Pour éviter d'avoir à prendre cette problématique en charge au sein du code Java, il est possible d'utiliser les <b>Action Hooks</b>.
 						<br/><br/>
 						Ces hooks permettent d'éxecuter des scripts durant certaines phases (build, deploy,...) directement sur les machines sur lequelles les applications sont hebergées.<br/>
+						<br/><br/>
+						Nous allons utiliser ce mécanisme pour initialiser les données de votre base si elle est vide.
 						<br/><br/>
 						Passons à l'action.
 					</div>
