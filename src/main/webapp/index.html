@@ -218,26 +218,7 @@
 					</div>
 				</section>
 				<section  data-tour="bonus" style="display:none">
-					<div data-tour-step="1" title="Debug">
-						Pour débugguer une application depuis votre IDE, il va falloir activer JPDA sur JBoss puis se connecter aux ports de debug depuis votre IDE
-						<h4>Activer le mode debug de JBoss</h4>
-						<p>Pour activer le support JPDA sur une instance Kermit, il faut utiliser les <b>markers</b>. Ces fichiers permettent entre autre de configurer les cartridges que votre application utilise.</p>
-						<p>Dans notre cas, à la racine du projet, il faut faire :</p>
-						<div class="cmd"><code>touch .openshift/markers/enable_jpda</code></div>
-						<div class="cmd"><code>git add .openshift/markers/enable_jpda</code></div>
-						<div class="cmd"><code>git commit -m "enable jdpa"</code></div>
-						<div class="cmd"><code>git push</code></div>
-					</div>
-					<div data-tour-step="2" title="Debug (suite)">
-						Une fois que l'application a redémarré, les ports JPDA sont en écoute sur l'application. 
-						Cependant, il est impossible de joindre ces ports qui sont attachés à des IP internes à Kermit.
-						<h4>Forwarder les ports de debug jusqu'à la machine locale</h4>
-						<p>Pour les joindre, il va falloir utiliser le mécanisme de <b>port-forwarding</b> en lançant :</p>
-						<code class="cmd">rhc port-forward {{appName}}</code>
-						<p>Ensuite, il suffit de lancer une session de <b>remote-debug</b> depuis votre IDE pour debugger <b>localhost:8787</b></p>
-						<video src="video/create_remote_debug_eclipse.mp4"  controls/>
-					</div>
-					<div data-tour-step="3" title="Take the power">
+					<div data-tour-step="1" title="Take the power">
 						Actuellement, le code applicatif s'assure que les tables Mysql dont on a besoin sont présentes (et les créées au premier lancement avec une base vide)
 						<br/><br/>
 						Pour éviter d'avoir à prendre cette problématique en charge au sein du code Java, il est possible d'utiliser les <b>Action Hooks</b>.
@@ -246,7 +227,7 @@
 						<br/><br/>
 						Passons à l'action.
 					</div>
-					<div data-tour-step="4" title="Take the power (suite)">
+					<div data-tour-step="2" title="Take the power (suite)">
 						A la racine du projet, regardez par exemple le fichier <b>.openshift/action_hooks/pre_start_jbossews-2.0</b> 
 						qui comme son nom l'indique est exécuté <b>avant chaque démarrage de jbossews</b>.
 						<br/><br/>
@@ -260,6 +241,25 @@
 						<br/><br/>
 						Décommentez les lignes commentées, poussez le code sur votre application (git add...commit...push..etc.)
 						<br/><br/>Observez les logs du git push
+					</div>
+					<div data-tour-step="3" title="Debug">
+						Pour débugguer une application depuis votre IDE, il va falloir activer JPDA sur JBoss puis se connecter aux ports de debug depuis votre IDE
+						<h4>Activer le mode debug de JBoss</h4>
+						<p>Pour activer le support JPDA sur une instance Kermit, il faut utiliser les <b>markers</b>. Ces fichiers permettent entre autre de configurer les cartridges que votre application utilise.</p>
+						<p>Dans notre cas, à la racine du projet, il faut faire :</p>
+						<div class="cmd"><code>touch .openshift/markers/enable_jpda</code></div>
+						<div class="cmd"><code>git add .openshift/markers/enable_jpda</code></div>
+						<div class="cmd"><code>git commit -m "enable jdpa"</code></div>
+						<div class="cmd"><code>git push</code></div>
+					</div>
+					<div data-tour-step="4" title="Debug (suite)">
+						Une fois que l'application a redémarré, les ports JPDA sont en écoute sur l'application. 
+						Cependant, il est impossible de joindre ces ports qui sont attachés à des IP internes à Kermit.
+						<h4>Forwarder les ports de debug jusqu'à la machine locale</h4>
+						<p>Pour les joindre, il va falloir utiliser le mécanisme de <b>port-forwarding</b> en lançant :</p>
+						<code class="cmd">rhc port-forward {{appName}}</code>
+						<p>Ensuite, il suffit de lancer une session de <b>remote-debug</b> depuis votre IDE pour debugger <b>localhost:8787</b></p>
+						<video src="video/create_remote_debug_eclipse.mp4"  controls/>
 					</div>
 					<div data-tour-step="5" title="World Wide Web">
 						Comment publier mon application sur Internet ?<br/>
