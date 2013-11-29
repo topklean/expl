@@ -657,6 +657,9 @@ div.hopscotch-bubble h3 {
 }
 
 .tuto-launcher {
+	position: absolute;
+	top:30px;
+	left:610px;
 	font-weight: bold;
 	border-width: 1px;
 	border-style: solid;
@@ -705,6 +708,10 @@ div.hopscotch-bubble h3 {
 	background-image: -moz-linear-gradient(top, #2672ae 0%, #1e4f7e 100%);
 	background-image: -o-linear-gradient(top, #2672ae 0%, #1e4f7e 100%);
 	background-image: linear-gradient(top, #2672ae 0%, #1e4f7e 100%);
+}
+
+.bonus-button {
+	left:740px;
 }
 
 /*
