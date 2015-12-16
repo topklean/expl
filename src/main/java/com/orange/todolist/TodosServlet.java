@@ -18,11 +18,11 @@ public class TodosServlet extends HttpServlet {
 		return new TodoStorageInMemory();
 		
 		//Use Mysql on Kermit
-//		String login = System.getenv("OPENSHIFT_MYSQL_DB_USERNAME");
-//		String password = System.getenv("OPENSHIFT_MYSQL_DB_PASSWORD");
-//		String host = System.getenv("OPENSHIFT_MYSQL_DB_HOST");
-//		String port = System.getenv("OPENSHIFT_MYSQL_DB_PORT");
-//		String database = System.getenv("OPENSHIFT_APP_NAME");
+//		String login = System.getenv("MYSQL_USER");
+//		String password = System.getenv("MYSQL_PASSWORD");
+//		String host = System.getenv("MYSQL_SERVICE_HOST");
+//		String port = System.getenv("MYSQL_SERVICE_PORT");
+//		String database = System.getenv("MYSQL_DATABASE");
 //		return new TodoStorageJDBCMysql(host, port, database, login, password);
 	}
 

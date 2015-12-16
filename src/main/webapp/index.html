@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>Atelier Kermit • TodoMVC</title>
+		<title>Kermit Workshop • TodoMVC</title>
 		<link rel="stylesheet" href="hopscotch/css/hopscotch-0.1.2.css">
 		<link rel="stylesheet" href="bower_components/todomvc-common/base.css">
 		<style>
@@ -68,7 +68,7 @@
 		<footer id="info">
 			<section ng-controller="TourCtrl">
 				<section id="tour" ng-cloak>
-					<button ng-click="startTour('normal', 11)" class="tuto-launcher">Démarrer l'atelier</button>
+					<button ng-click="startTour('normal', 11)" class="tuto-launcher">Start workshop</button>
 					<button ng-click="startTour('bonus', 7)" class="tuto-launcher bonus-button" ng-show="isBonusVisible">Bonus</button>
 				</section>
 				
@@ -81,156 +81,139 @@
 				</section>
 				
 				<section data-tour="normal" style="display:none">
-					<div data-tour-step="1" title="Prise en main">
-						<div>Si vous ne l'avez pas encore fait, prenez le temps de manipuler la todo-list à gauche.</div>
+					<div data-tour-step="1" title="Getting Started">
+						<div>If you didn't do it yet, take time to use the todo list on your left.</div>
 						<br/>
-						<div>Ajoutez, supprimez, fermez ou encore modifiez des tâches.</div>
+						<div>Add, delete, close, or update tasks.</div>
 						<br/>
-						<div>Une fois que vous avez compris le fonctionnement de l'application, passez à l'étape suivante</div>
+						<div>Once you understood the todo list behaviors, go to next step.</div>
 					</div>
-					<div data-tour-step="2" title="Outillage">
-						Si ce n'est pas déjà le cas sur votre ordinateur, il faut installer un peu d'outillage pour pouvoir jouer avec Kermit.<br/><br/>
-						Pour cela vous avez <b>2 options</b> :
-						<ul>
-							<li>
-								<div><b>Option 1:</b> Installer <b>Kermit Portable</b> (Windows only) :</div>
-								<ol>
-									<li>Télécharger la <b>dernière version</b> de <a href="https://orangeforge.rd.francetelecom.fr/file/showfiles.php?group_id=4178">Kermit Portable</a></li>
-									<li>Dézipper l'archive sur votre poste</li>
-									<li>Lancez le script <b>Kermit.cmd</b></li>
-									<li>Répondez aux différentes questions</li>
-									<ul>
-										<li>login/password du compte kermit</li>
-										<li>yes pour l'upload de la clée ssh</li>
-										<li>nom de la clée ssh (valider)</li>
-										<li>votre nom et email</li>
-									</ul>
-								</ol>
-							</li>
-						</ul>
-						<ul>
-							<li>
-								<div><b>Option 2:</b>Installer <b>manuellement</b> chaque outil* en suivant le <a href="https://orangeforge.rd.francetelecom.fr/plugins/mediawiki/wiki/kermit/index.php/Installation_Manuelle">guide</a>
-								<ul>
-									<li>git & ssh</li>
-									<li>rhc</li>
-									<li>proxytunnel</li>
-									<li>...</li>
-								</ul>
-							</li>
-						</ul>
-						*utile si vous voulez intégrer kermit à votre outillage existant
-					</div>
-					<div data-tour-step="3" title="Cloner le code sur votre PC">
-						Pour cloner le code sur votre PC<br/>
-						<br/>
-						<code class="cmd">rhc git-clone {{appName}}</code><br/>
-						<br/>
-						Remarque : Il se peut qu'une erreur apparaisse<br/>
-						<blockquote>
-							Error while adding config values to git - error: could not lock config file .git/config: No such file or directory
-						</blockquote>
-						Ignorez-la.<br/>
-						<br/>
-						Pour valider cette étape faites <br/>
-						<br/>
-						<code class="cmd">cd {{appName}}</code>
-						<br/>
-					</div>
-					<div data-tour-step="4" title="Importer et consulter le code">
-						Localiser le code sur votre PC (cf. prompt de la commande)<br/>
-						<br/>
-						Lancer Eclipse (ou l'IDE de votre choix) et importer le code<br/>
-						<br/>
-						Avec Eclipse vous pouvez au choix "importer un projet existant" ou "importer un projet maven"
-						<br/>
-						<br/>
-					</div>					
-					<div data-tour-step="5" title="S'amuser avec l'application">
-						Essayez d'ajouter une tâche du type<br/>
-						<p>
-							<b>'Résilier mon abonnement Orange'</b><br/>
-						</p>
-						<p>
-							Ca ne marche pas ? Vous pouvez regarder dans les logs du serveur ce qu'il se passe pendant que vous faites l'ajout
-						</p>
-						<p>
-							<code class="cmd">rhc tail {{appName}}</code> <i>(<b>CTRL+C</b> pour arrêter le tail)</i><br/>
-						</p>
-						<p>
-							<img style='width:360px' src='errorlogs.png'/>
-						</p>
-					</div>
-					<div data-tour-step="6" title="S'amuser avec l'application (soluce)">
-						Vous n'avez pas compris l'étape précédente  ? <br/>
-						<br/>
-						Pour mieux comprendre, vous pouvez regarder directement la méthode <code>validate</code> dans le code du fichier<br/>
-						<br/>
-						<b>src/main/java/com/orange/todolist/TodoStorage.java</b>
-					</div>
-					<div data-tour-step="7" title="Je persiste, tu persistes, ...">
-						<p>
-							Actuellement, les todos ne sont sauvegardés que pendant la durée de vie de l'application.
-						</p>
-						<p>
-							<span style='color:red;'>Si vous la redémarrer, vous perdrez vos données.</span>
-						</p>
-						<p>
-							<i>
-								Remarque : vous pouvez tester de redémarrer l'application
-							</i>
-						</p>
-						<p>
-							<code class="cmd">rhc app restart {{appName}}</code>
-						</p>
-						<p>
-							Pour pallier à ce problème ajoutons le support <b>MySQL</b> pour persister ces todos
-						</p>
-					</div>
-					<div data-tour-step="8" title="Support MySQL">
-						Pour ajouter un service MySQL à l'application il faut demander à Kermit de lui associer une 'cartridge' MySQL<br/>
-						<br/>
-						Allez sur la <a target='_blank' href='https://broker.{{globaldomain}}/console/applications/{{appName}}'>page de votre projet</a><br/>
-						<ol>
-							<li>Add Cartridge</li>
-							<li>Select <b>MySQL 5.1</b></li>
-							<li>Add Cartridge</li>
-						</ol>
-						<br/>
-						<video src="video/mysql.mp4" controls></video>
-					</div>
-					<div data-tour-step="9" title="Modifier le code pour MySQL">
-						Ajouter une cartridge ne suffit pas pour stocker les todos dans mysql<br/>
-						Il va falloir modifier le code (un peu)<br/>
-						<br/>
-						Dans la méthode <b>getStorageService</b> de la classe <b>src/main/java/com/orange/todolist/TodosServlet.java</b><br/>
-						<br/>
-						Commentez l'utilisation de <b>TodoStorageInMemory</b> et décommentez la suite de la méthode (utilisation de <b>TodoStorageJDBCMysql</b>)<br/>
-						<br/>
-						Sauvegardez vos modifications dans git<br/>
-						<br/>
-						<code class="cmd">git commit -am "Passage a MySQL"</code>
-					</div>
-					<div data-tour-step="10" title="Redéployer le code">
-						Pour redéployer le code :<br/>
-						<br/>
-						<code class="cmd">git push</code> (attendre la fin d'éxecution de la commande)<br/>
-						<br/>
-						Under the hood :
-						<ul>
-							<li>le code est envoyé sur le serveur</li>
-							<li>JBoss est coupé</li>
-							<li>un build maven est lancé</li>
-							<li>Jboss est redémarré</li>
-							<li>votre application est prête</li>
-						</ul>
-						<br/>
-						Rendez-vous sur <a href="{{appHttpUrl()}}">Votre application</a>
-						<br/><br/>
-						Vous pouvez dorénavant ajouter/supprimer/éditer des tâches puis redémarrer l'application et constater que les données sont persistantes
-					</div>
-					<div data-tour-step="11" title="Merci">
-						Si vous avez fini plus tôt vous pouvez essayer les Bonus
+                    <div data-tour-step="2" title="Play with your application">
+                        Try to add the following task:<br/>
+                        <p>
+                            <b>'Cancel my Orange subscription'</b><br/>
+                        </p>
+                        <p>
+                            It raise an error ? You may need to watch server logs.
+                        </p>
+                        <p>
+                            <code class="cmd">oc get pods</code> <i>Copy the name of your pod (ex: workshop-djfhtg)</i><br/>
+                            <code class="cmd">oc logs workshop-djfhtg</code><br/>
+                        </p>
+                        <p>
+                            <img style='width:360px' src='errorlogs.png'/>
+                        </p>
+                    </div>
+                    <div data-tour-step="3" title="Play with your application (solution)">
+                        You did not understand the previous step ? <br/>
+                        <br/>
+                        To understand, watch the <code>validate</code> method in the source code of the workshop application<br/>
+                        <br/>
+                        <b>src/main/java/com/orange/todolist/TodoStorage.java</b>
+                    </div>
+                    <div data-tour-step="4" title="I store, you store, ...">
+                        <p>
+                            Currently, tasks are only stored while application is running.
+                        </p>
+                        <p>
+                            <span style='color:red;'>If you stop your application, all datas will be lost.</span>
+                        </p>
+                        <p>
+                            <i>
+                                Note : you can try to stop your application
+                            </i>
+                        </p>
+                        <p>
+                            <code class="cmd">oc get pods</code> <i>Copy the name of your pod (ex: workshop-djfhtg)</i><br/>
+                            <code class="cmd">oc stop pod workshop-djfhtg</code> <i>Kubernetes will automatically start an other pod</i><br/>
+                        </p>
+                        <p>
+                            To avoid this problem, we can add <b>MySQL</b> support, to store tasks.
+                        </p>
+                    </div>
+                    <div data-tour-step="5" title="Create a MySQL service">
+                        To add MySQL support to our Todo list, you have to create a MySQL service<br/>
+                        <br/>
+                        On your X/Dos terminal execute the following command:
+                        <code class="cmd">
+                            oc new-app mysql --name="workshop-db" -e MYSQL_USER=workshop-user -e MYSQL_PASSWORD=workshop-pwd -e MYSQL_DATABASE=workshop-db<br/>
+                        </code>
+                        <br/>
+                        Now you have to inject MYSQL_XXX env var into your workshop application
+                        <br />
+                        <code class="cmd">
+                            oc get pods # to get your workshop-db application pod name<br/>
+                            oc get deploymentconfigs # to get your workshop application deployment config name<br/>
+                            oc exec workshop-db-XXXX env | grep MYSQL_ | oc env dc/workshop -e -<br/>
+                        </code>
+                        <br />
+                        To check if environment variable have been injected in workshop application :
+                        <code class="cmd">
+                            oc get pods # get your workshop pod name<br/>
+                            oc exec workshop-Y-XXX env | grep MYSQL_<br/>
+                        </code>
+                        <br />
+                        This will display the following output :
+                        <p>
+                            <img style='width:360px' src='envvardisplay.png'/>
+                        </p>
+                    </div>
+                    <div data-tour-step="6" title="Update source code to support MySQL">
+                        Add MySQL service is not enought to be able to store tasks<br/>
+                        You need to update your java source code<br/>
+                        <br/>
+                        In the <b>getStorageService</b> method of <b>src/main/java/com/orange/todolist/TodosServlet.java</b> class<br/>
+                        <br/>
+                        Comment the use of <b>TodoStorageInMemory</b> and uncomment the rest of the method <b>TodoStorageJDBCMysql</b>)<br/>
+                        <br/>
+                        Save your file, and commit/push your modification on your github repository<br/>
+                        <br/>
+                        <code class="cmd">
+                            git commit -am "Activate MySQL storage"<br/>
+                            git push origin master<br/>
+                        </code>
+                    </div>
+                    <div data-tour-step="7" title="Rebuild your application">
+                        To deploy your application with the new release of your code, you just need to rebuild it. If build is successfull, then your new application relase will be automaticcaly deployed<br/>
+                        <br/>
+                        <code class="cmd">oc start-build workshop</code><br/>
+                        <br/>
+                        Once the build/deployment finished, reload your browser.
+                        <br/>
+                        All your tasks disapeared
+                        <br/>
+                        Create others tasks
+                        <br/>
+                        Stop your workshop application
+                        <code class=""cmd">
+                            oc get pods # get the name of your workshop running pod<br/>
+                            oc stop pod workshop-Y-XXXX<br/>
+                        </code>
+                        <br/>
+                        Your pod will be stopped and recreated automatically.
+                        <br/>
+                        Reload your browser. Your tasks are still present, and have been store in mysql database.
+                     </div>
+					<div data-tour-step="8" title="Mysql Ephemeral storage">
+						At this time we created an application with a MySQL database to store tasks. Unfortunatly we use an ephemeral mysql storage. Indeed if we stop our mysql pod, we will loose all our database content.<br/><br/>
+						To confirm it, stop your mysql database pod :
+                        <br/>
+                        <code class="cmd">
+                            oc get pods # get the mysql running pod name</br/>
+                            oc stop pod workshop-db-Y-XXXX<br/>
+                        </code>
+                        <br/>
+                        Reload your browser. All your tasks disapeared.
+                        <br/>
+                        To avoid this we need persistent storage.
+                        <br/>
+			        </div>
+                    <div data-tour-step="9" title="Use Mysql persistant storage">
+                        Waiting for persistent volume to be added in prod infra
+                        <b>To be continue....</b>
+                    </div>
+					<div data-tour-step="10" title="Thanks">
+						If you want to learn more, go on Bonus...
 					</div>
 				</section>
 				<section  data-tour="bonus" style="display:none">
