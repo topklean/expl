@@ -30,10 +30,8 @@ items:
     source:
       git:
         ref: master
-        uri: https://www.forge.orange-labs.fr/plugins/git/kermit/openshiftv3/samples/workshop.git
+        uri: https://github.com/[git_account]/workshop.git
       type: Git
-      sourceSecret:
-        name: mysecret
     strategy:
       sourceStrategy:
         from:
@@ -132,7 +130,7 @@ items:
       app: sample
     name: workshop
   spec:
-    host: workshop-workshop.kmt-dev4.orange-labs.fr
+    host: workshop-[git_account].kmt.orange-labs.fr
     port:
       targetPort: "8080"
     to:
