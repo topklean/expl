@@ -124,7 +124,7 @@
 	function findRoot() {
 		var base;
 
-		[/labs/, /\w*-examples/].forEach(function (href) {
+		[/labstoto/, /\w*-examples/].forEach(function (href) {
 			var match = location.href.match(href);
 
 			if (!base && match) {
@@ -132,7 +132,7 @@
 			}
 		});
 
-		return location.href.substr(0, base);
+		return location.href.substr(7, base+7);
 	}
 
 	function getFile(file, callback) {

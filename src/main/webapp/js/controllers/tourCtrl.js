@@ -1,13 +1,10 @@
 'use strict';
 
 todomvc.controller('TourCtrl', function TodoCtrl($scope, $timeout) {
-	$scope.kermitPortableUrl = "https://orangeforge.rd.francetelecom.fr/file/showfiles.php?group_id=4178&release_id=13779";
-	$scope.globaldomain = "beta.kermit.rd.francetelecom.fr";
-	$scope.publicdomain = "beta.kermit.orange-labs.fr";
-	$scope.consoleHome = "https://broker."+$scope.globaldomain+"/console/applications/";
+	$scope.publicdomain = "km.orange-labs.fr";
+	$scope.consoleHome = "https://master."+$scope.globaldomain;
 	$scope.defaultAppName="application_name";
 	$scope.appName = $scope.defaultAppName;
-	$scope.domain = "demo";
 	$scope.currentStep = -1;
 	$scope.nbSteps = 0;
 	$scope.isBonusVisible = false;
@@ -21,7 +18,7 @@ todomvc.controller('TourCtrl', function TodoCtrl($scope, $timeout) {
 	*/
 	$scope.init = function(){
 		if($scope.appName == $scope.defaultAppName){
-			//Récupère le domaine ex : atelier-demo.beta.kermit.rd.francetelecom.fr
+			//Rï¿½cupï¿½re le domaine ex : atelier-demo.beta.kermit.rd.francetelecom.fr
 			var host = window.location.host;
 			if( host !== ""){
 				var nameAndDomain = host.split('.')[0].split('-');
@@ -74,9 +71,9 @@ todomvc.controller('TourCtrl', function TodoCtrl($scope, $timeout) {
 			bubbleWidth : 400,
 			bubblePadding : 20,
 			i18n : {
-				prevBtn:"Prec.",
-				nextBtn:"Suite",
-				doneBtn:"Fin"
+				prevBtn:"Prev.",
+				nextBtn:"Next",
+				doneBtn:"End"
 			  },
 			steps: []
 		};
