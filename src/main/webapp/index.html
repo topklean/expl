@@ -95,7 +95,7 @@
                             It raise an error ? You may need to watch server logs.
                         </p>
                         <p>
-                            <code class="cmd">oc get pods | grep Running</code>   <i>Copy the name of your pod (ex: workshop-2-djfht)</i>
+                            <code class="cmd">oc get pods | grep Running</code>   <i>Copy the name of your pod (ex: workshop-2-djfht)</i><br/>
                             <code class="cmd">oc stop pod workshop-Y-XXXXX</code>   <i>Kubernetes will automatically start an other pod</i>
                         </p>
                         <p>
@@ -120,7 +120,7 @@
                             </i>
                         </p>
                         <p>
-                            <code class="cmd">oc get pods | grep Running</code> <i>Copy the name of your pod (ex: workshop-2-djfht)</i>
+                            <code class="cmd">oc get pods | grep Running</code> <i>Copy the name of your pod (ex: workshop-2-djfht)</i><br/>
                             <code class="cmd">oc stop pod workshop-Y-XXXXX</code> <i>Kubernetes will automatically start an other pod</i>
                         </p>
                         <p>
@@ -137,13 +137,13 @@
                         </p>
                         <p>Now you have to inject MYSQL_XXX env var into your workshop application</p>
                         <p>
-                            <code class="cmd">oc get pods | grep Running</code>   <i># to get your workshop-db application pod name</i>
-                            <code class="cmd">oc get deploymentconfigs | grep workshop</code>    <i># to get your workshop application deployment config name</i>
+                            <code class="cmd">oc get pods | grep Running</code>   <i># to get your workshop-db application pod name</i><br/>
+                            <code class="cmd">oc get deploymentconfigs | grep workshop</code>    <i># to get your workshop application deployment config name</i><br/>
                             <code class="cmd">oc exec workshop-db-Y-XXXXX env | grep MYSQL_ | oc env dc/workshop -e -</code>
                         </p>
                         <p>To check if environment variable have been injected in workshop application :</p>
                         <p>
-                            <code class="cmd">oc get pods | grep Running</code>   <i># get your workshop pod name</i>
+                            <code class="cmd">oc get pods | grep Running</code>   <i># get your workshop pod name</i><br/>
                             <code class="cmd">oc exec workshop-Y-XXXXX env | grep MYSQL_</code>
                         </p>
                         <p>This will display the following output :</p>
@@ -172,7 +172,7 @@
                         <p>Create others tasks</p>
                         <p>Stop your workshop application</p>
                         <p>
-                            <code class="cmd">oc get pods | grep Running</code>   <i># get the name of your workshop running pod</i>
+                            <code class="cmd">oc get pods | grep Running</code>   <i># get the name of your workshop running pod</i><br/>
                             <code class="cmd">oc stop pod workshop-Y-XXXXX</code>
 
                         </p>
@@ -183,7 +183,7 @@
 						<p>At this time we created an application with a MySQL database to store tasks. Unfortunatly we use an ephemeral mysql storage. Indeed if we stop our mysql pod, we will loose all our database content.</p>
 						<p>To confirm it, stop your mysql database pod :</p>
                         <p>
-                            <code class="cmd">oc get pods | grep Running</code>   <i># get the mysql running pod name</i>
+                            <code class="cmd">oc get pods | grep Running</code>   <i># get the mysql running pod name</i><br/>
                             <code class="cmd">oc stop pod workshop-db-Y-XXXXX</code>
                         </p>
                         <p>Reload your browser. All your tasks disapeared.</p>
