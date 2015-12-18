@@ -30,7 +30,7 @@ items:
     source:
       git:
         ref: master
-        uri: https://github.com/[git_account]/workshop.git
+        uri: https://github.com/[git_account]/workshop-[git_account].git
       type: Git
     strategy:
       sourceStrategy:
