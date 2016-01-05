@@ -8,7 +8,7 @@ items:
     creationTimestamp: null
     labels:
       app: sample
-    name: workshop
+    name: workshop-[user_uuid]
   spec: {}
   status:
     dockerImageRepository: ""
@@ -20,12 +20,12 @@ items:
     creationTimestamp: null
     labels:
       app: sample
-    name: workshop
+    name: workshop-[user_uuid]
   spec:
     output:
       to:
         kind: ImageStreamTag
-        name: workshop:latest
+        name: workshop-[user_uuid]:latest
     resources: {}
     source:
       git:
@@ -59,12 +59,12 @@ items:
     creationTimestamp: null
     labels:
       app: sample
-    name: workshop
+    name: workshop-[user_uuid]
   spec:
     replicas: 1
     selector:
       app: sample
-      deploymentconfig: workshop
+      deploymentconfig: workshop-[user_uuid]
     strategy:
       resources: {}
     template:
@@ -74,11 +74,11 @@ items:
         creationTimestamp: null
         labels:
           app: sample
-          deploymentconfig: workshop
+          deploymentconfig: workshop-[user_uuid]
       spec:
         containers:
-        - image: library/workshop:latest
-          name: workshop
+        - image: library/workshop-[user_uuid]:latest
+          name: workshop-[user_uuid]
           ports:
           - containerPort: 8080
             protocol: TCP
@@ -90,10 +90,10 @@ items:
     - imageChangeParams:
         automatic: true
         containerNames:
-        - workshop
+        - workshop-[user_uuid]
         from:
           kind: ImageStreamTag
-          name: workshop:latest
+          name: workshop-[user_uuid]:latest
       type: ImageChange
   status: {}
 - apiVersion: v1
@@ -104,7 +104,7 @@ items:
     creationTimestamp: null
     labels:
       app: sample
-    name: workshop
+    name: workshop-[user_uuid]
   spec:
     ports:
     - name: 8080-tcp
@@ -117,7 +117,7 @@ items:
       targetPort: 8443
     selector:
       app: sample
-      deploymentconfig: workshop
+      deploymentconfig: workshop-[user_uuid]
   status:
     loadBalancer: {}
 - apiVersion: v1
@@ -128,14 +128,14 @@ items:
     creationTimestamp: null
     labels:
       app: sample
-    name: workshop
+    name: workshop-[user_uuid]
   spec:
     host: workshop-[user_uuid].kmt.orange-labs.fr
     port:
       targetPort: "8080"
     to:
       kind: Service
-      name: workshop
+      name: workshop-[user_uuid]
 metadata: {}
 kind: List
 metadata: {}
