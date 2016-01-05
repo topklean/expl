@@ -30,7 +30,7 @@ items:
     source:
       git:
         ref: master
-        uri: https://github.com/[git_account]/workshop-[git_account].git
+        uri: https://github.com/orangekmt/workshop-[user_uuid].git
       type: Git
     strategy:
       sourceStrategy:
@@ -130,7 +130,7 @@ items:
       app: sample
     name: workshop
   spec:
-    host: workshop-[git_account].kmt.orange-labs.fr
+    host: workshop-[user_uuid].kmt.orange-labs.fr
     port:
       targetPort: "8080"
     to:
