@@ -96,7 +96,7 @@
                         </p>
                         <p>
                             <code class="cmd">oc get pods | grep Running</code>   <i>Copy the name of your pod (ex: workshop-2-djfht)</i><br/>
-                            <code class="cmd">oc stop pod workshop-Y-XXXXX</code>   <i>Kubernetes will automatically start an other pod</i>
+                            <code class="cmd">oc logs workshop-Y-XXXXX</code>   <i>Kubernetes will automatically start an other pod</i>
                         </p>
                         <p>
                             <img style='width:360px' src='errorlogs.png'/>
@@ -124,6 +124,8 @@
                             <code class="cmd">oc stop pod workshop-Y-XXXXX</code> <i>Kubernetes will automatically start an other pod</i>
                         </p>
                         <p>
+                            Wait a bit, and then refresh your workshop application web page<br />
+                            Saved tasks are no more available.<br />
                             To avoid this problem, we can add <b>MySQL</b> support, to store tasks.
                         </p>
                     </div>
@@ -139,12 +141,12 @@
                         <p>
                             <code class="cmd">oc get pods | grep Running</code>   <i># to get your workshop-db application pod name</i><br/>
                             <code class="cmd">oc get deploymentconfigs | grep workshop</code>    <i># to get your workshop application deployment config name</i><br/>
-                            <code class="cmd">oc exec workshop-db-Y-XXXXX env | grep MYSQL_ | oc env dc/workshop -e -</code>
+                            <code class="cmd">oc exec workshop-db-Y-XXXXX env | grep MYSQL_ | oc env dc/workshop-USER_UUID -e -</code>
                         </p>
                         <p>To check if environment variable have been injected in workshop application :</p>
                         <p>
                             <code class="cmd">oc get pods | grep Running</code>   <i># get your workshop pod name</i><br/>
-                            <code class="cmd">oc exec workshop-Y-XXXXX env | grep MYSQL_</code>
+                            <code class="cmd">oc exec workshop-USER_UUID-Y-XXXXX env | grep MYSQL_</code>
                         </p>
                         <p>This will display the following output :</p>
                         <p>
