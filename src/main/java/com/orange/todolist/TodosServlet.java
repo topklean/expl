@@ -20,8 +20,8 @@ public class TodosServlet extends HttpServlet {
 		//Use Mysql on Kermit
 //		String login = System.getenv("MYSQL_USER");
 //		String password = System.getenv("MYSQL_PASSWORD");
-//		String host = System.getenv("MYSQL_SERVICE_HOST");
-//		String port = System.getenv("MYSQL_SERVICE_PORT");
+//		String host = System.getenv("WORKSHOP_DB_SERVICE_HOST");
+//		String port = System.getenv("WORKSHOP_DB_SERVICE_PORT");
 //		String database = System.getenv("MYSQL_DATABASE");
 //		return new TodoStorageJDBCMysql(host, port, database, login, password);
 	}

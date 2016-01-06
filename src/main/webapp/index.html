@@ -137,16 +137,16 @@
                             oc new-app mysql --name="workshop-db" -e MYSQL_USER=workshop_user -e MYSQL_PASSWORD=workshop_pwd -e MYSQL_DATABASE=workshop_db
                             </code>
                         </p>
-                        <p>Now you have to inject MYSQL_XXX env var into your workshop application</p>
+                        <p>Now you have to inject WORKSHOP_DB_XXX env var into your workshop application</p>
                         <p>
                             <code class="cmd">oc get pods | grep Running</code>   <i># to get your workshop-db application pod name</i><br/>
                             <code class="cmd">oc get deploymentconfigs | grep workshop</code>    <i># to get your workshop application deployment config name</i><br/>
-                            <code class="cmd">oc exec workshop-db-Y-XXXXX env | grep MYSQL_ | oc env dc/workshop-USER_UUID -e -</code>
+                            <code class="cmd">oc exec workshop-db-Y-XXXXX env | grep 'MYSQL_\|WORKSHOP_DB' | oc env dc/workshop-USER_UUID -e -</code>
                         </p>
                         <p>To check if environment variable have been injected in workshop application :</p>
                         <p>
                             <code class="cmd">oc get pods | grep Running</code>   <i># get your workshop pod name</i><br/>
-                            <code class="cmd">oc exec workshop-USER_UUID-Y-XXXXX env | grep MYSQL_</code>
+                            <code class="cmd">oc exec workshop-USER_UUID-Y-XXXXX env | grep 'MYSQL\|WORKSHOP_DB_'</code>
                         </p>
                         <p>This will display the following output :</p>
                         <p>
