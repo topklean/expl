@@ -192,8 +192,25 @@
                         <p>To avoid this we need persistent storage.</p>
 			        </div>
                     <div data-tour-step="9" title="Use Mysql persistant storage">
-                        <p>Waiting for persistent volume to be added in prod infra</p>
-                        <p><b>To be continue....</b></p>
+                        <p>First get the name of the volume:</p>
+												<p>
+                            <code class="cmd">oc volume dc/workshop-db --list</code><br />
+                            <code class="cmd">deploymentconfigs/workshop-db</code><br />
+														<code class="cmd">&nbsp;&nbsp;empty directory as workshop-db-volume-1</code><i>&nbsp;&nbsp;In my case /var/lib/mysql/data is on workshop-db-volume-1</i><br />
+														<code class="cmd">&nbsp;&nbsp;&nbsp;&nbsp;mounted at /var/lib/mysql/data</code><br />
+														<code class="cmd">&nbsp;&nbsp;empty directory as workshop-db-volume-2</code><br />
+														<code class="cmd">&nbsp;&nbsp;&nbsp;&nbsp;mounted at /run</code><br />
+												<p>Then make your data persistent, replace workshop-db-volume-X by your own value:</p>
+												<p>
+													<code class="cmd">oc volume dc/workshop-db --add --name=workshop-db-volume-X -t pvc --claim-name=mysqldb-pvc --claim-size=3G --claim-mode=ReadWriteMany --overwrite</code>
+												</p>
+												<p>That's all !</p>
+												<p>You can check the persistence by stoping the pod as in step 7, or you can login in your pod to see the result:</p>
+												<p>
+													<code class="cmd">oc exec workshop-db-Y-XXXXX -it bash</code><br />
+													<code class="cmd">df -h|grep data</code><br />
+													<code class="cmd">192.168.2.10:/mnt/volumes/pv0001		985G  106M  935G   1% /var/lib/mysql/data</code>
+												</p>
                     </div>
 					<div data-tour-step="10" title="Thanks">
 						<p>If you want to learn more, go on Bonus...</p>
