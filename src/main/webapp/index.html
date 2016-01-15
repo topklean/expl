@@ -195,21 +195,37 @@
                         <p>First get the name of the volume:</p>
 												<p>
                             <code class="cmd">oc volume dc/workshop-db --list</code><br />
+												</p>
+												<p>Output::</p>
+												<p>
                             <code class="cmd">deploymentconfigs/workshop-db</code><br />
-														<code class="cmd">&nbsp;&nbsp;empty directory as workshop-db-volume-1</code><i>&nbsp;&nbsp;In my case /var/lib/mysql/data is on workshop-db-volume-1</i><br />
-														<code class="cmd">&nbsp;&nbsp;&nbsp;&nbsp;mounted at /var/lib/mysql/data</code><br />
+														<code class="cmd">&nbsp;&nbsp;empty directory as <FONT COLOR="red" >workshop-db-volume-1</FONT></code><br />
+														<code class="cmd">&nbsp;&nbsp;&nbsp;&nbsp;mounted at <FONT COLOR="blue" >/var/lib/mysql/data</FONT></code><br />
 														<code class="cmd">&nbsp;&nbsp;empty directory as workshop-db-volume-2</code><br />
 														<code class="cmd">&nbsp;&nbsp;&nbsp;&nbsp;mounted at /run</code><br />
-												<p>Then make your data persistent, replace workshop-db-volume-X by your own value:</p>
+                        </p>
+												<p>The output show that this pod use 2 volumes and the directory /var/lib/mysql/data is on workshop-db-volume-1.</p>
+												<p>Then make your data persistent. In the command bellow, replace workshop-db-volume-X by your own value. After launching the command, look at what hapen in the overview window of the console.</p>
 												<p>
-													<code class="cmd">oc volume dc/workshop-db --add --name=workshop-db-volume-X -t pvc --claim-name=mysqldb-pvc --claim-size=3G --claim-mode=ReadWriteMany --overwrite</code>
+													<code class="cmd">oc volume dc/workshop-db --add --name=<FONT COLOR="red" >workshop-db-volume-X </FONT></code>
+													<code class="cmd">-t pvc --claim-name=mysqldb-pvc --claim-size=3G </code>
+													<code class="cmd">--claim-mode=ReadWriteMany --overwrite</code>
 												</p>
-												<p>That's all !</p>
-												<p>You can check the persistence by stoping the pod as in step 7, or you can login in your pod to see the result:</p>
+												<p>In the web console, you can see a new pod appearing and then the old one disapear: a "build config" object is created wich create an image. Then a 'deploy config' customyze your app. Finally the resulting pod is launched and appear running. And all those steps are done inside diffrent containers!</p>
+												<p>Now if you launch this command again:</p>
 												<p>
-													<code class="cmd">oc exec workshop-db-Y-XXXXX -it bash</code><br />
-													<code class="cmd">df -h|grep data</code><br />
-													<code class="cmd">192.168.2.10:/mnt/volumes/pv0001		985G  106M  935G   1% /var/lib/mysql/data</code>
+													<code class="cmd">oc volume dc/mysqldb-jlb --list</code>
+												</p>
+												<p>"empty directory" (ephemeral storage in openshift) has been replaced by the physical volume claim :</p>
+												<p>
+														<code class="cmd">&nbsp;&nbsp;empty directory as workshop-db-volume-1</code><br />
+														<code class="cmd">&nbsp;&nbsp;&nbsp;&nbsp;<FONT COLOR="red" >pvc/mysqldb-pvc (allocated 3GiB)</FONT> as mysqldb-jlb-volume-1</code><br />
+														<code class="cmd">&nbsp;&nbsp;empty directory as workshop-db-volume-2</code><br />
+														<code class="cmd">&nbsp;&nbsp;&nbsp;&nbsp;mounted at /run</code>
+												</p>
+												<p>You can also check the persistence by login into your pod with this command:</p>
+												<p>
+													<code class="cmd">oc exec workshop-db-Y-XXXXX -it bash</code>
 												</p>
                     </div>
 					<div data-tour-step="10" title="Thanks">
