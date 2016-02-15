@@ -136,9 +136,9 @@
                         <p>To add MySQL support to our Todo list, you have to create a MySQL service</p>
                         <p>On your X/Dos terminal execute the following command:</p>
                         <p>
-                            <code class="cmd">
-                            oc new-app mysql --name="workshop-db" -e MYSQL_USER=workshop_user -e MYSQL_PASSWORD=workshop_pwd -e MYSQL_DATABASE=workshop_db
-                            </code>
+                            <code class="cmd">oc new-app mysql --name="workshop-db" </code>
+														<code class="cmd">-e MYSQL_USER=workshop_user -e MYSQL_PASSWORD=workshop_pwd -e MYSQL_DATABASE=workshop_db </code>
+														<code class="cmd">-l app=workshop,third=database</code>
                         </p>
 												 <p>Once the MySQL service is deployed, you will have something like this:</p>
 												<p>

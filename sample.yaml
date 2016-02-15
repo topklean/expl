@@ -7,7 +7,8 @@ items:
       openshift.io/generated-by: OpenShiftNewApp
     creationTimestamp: null
     labels:
-      app: sample
+      app: workshop
+      third: frontend
     name: workshop-[user_uuid]
   spec: {}
   status:
@@ -19,7 +20,8 @@ items:
       openshift.io/generated-by: OpenShiftNewApp
     creationTimestamp: null
     labels:
-      app: sample
+      app: workshop
+      third: frontend
     name: workshop-[user_uuid]
   spec:
     output:
@@ -58,12 +60,13 @@ items:
       openshift.io/generated-by: OpenShiftNewApp
     creationTimestamp: null
     labels:
-      app: sample
+      app: workshop
+      third: frontend
     name: workshop-[user_uuid]
   spec:
     replicas: 1
     selector:
-      app: sample
+      app: workshop
       deploymentconfig: workshop-[user_uuid]
     strategy:
       resources: {}
@@ -73,7 +76,8 @@ items:
           openshift.io/generated-by: OpenShiftNewApp
         creationTimestamp: null
         labels:
-          app: sample
+          app: workshop
+          third: frontend
           deploymentconfig: workshop-[user_uuid]
       spec:
         containers:
@@ -103,7 +107,8 @@ items:
       openshift.io/generated-by: OpenShiftNewApp
     creationTimestamp: null
     labels:
-      app: sample
+      app: workshop
+      third: frontend
     name: workshop-[user_uuid]
   spec:
     ports:
@@ -116,7 +121,7 @@ items:
       protocol: TCP
       targetPort: 8443
     selector:
-      app: sample
+      app: workshop
       deploymentconfig: workshop-[user_uuid]
   status:
     loadBalancer: {}
@@ -127,7 +132,8 @@ items:
       openshift.io/host.generated: "true"
     creationTimestamp: null
     labels:
-      app: sample
+      app: workshop
+      third: frontend
     name: workshop-[user_uuid]
   spec:
     host: workshop-[user_uuid].kmt.orange-labs.fr
