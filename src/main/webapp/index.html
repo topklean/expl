@@ -237,7 +237,7 @@
 												<p>In the web console, you can see a new pod appearing and then the old one disapear: a "build config" object is created wich create an image. Then a 'deploy config' customyze your app. Finally the resulting pod is launched and appear running. And all those steps are done inside diffrent containers!</p>
 												<p>Now if you launch this command again:</p>
 												<p>
-													<code class="cmd">oc volume dc/mysqldb-jlb --list</code>
+													<code class="cmd">oc volume dc/workshop-db --list</code>
 												</p>
 												<p>"empty directory" (ephemeral storage in openshift) has been replaced by the physical volume claim :</p>
 												<p>
