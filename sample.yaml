@@ -136,7 +136,7 @@ items:
       third: frontend
     name: workshop-[user_uuid]
   spec:
-    host: workshop-[user_uuid].kmt.orange-labs.fr
+    host: workshop-[user_uuid].kmt-beta.orange-labs.fr
     port:
       targetPort: "8080"
     to:
