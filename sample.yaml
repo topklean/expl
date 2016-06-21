@@ -9,7 +9,7 @@ items:
     labels:
       app: workshop
       third: frontend
-    name: workshop-[user_uuid]
+    name: workshop-example
   spec: {}
   status:
     dockerImageRepository: ""
@@ -22,17 +22,17 @@ items:
     labels:
       app: workshop
       third: frontend
-    name: workshop-[user_uuid]
+    name: workshop-example
   spec:
     output:
       to:
         kind: ImageStreamTag
-        name: workshop-[user_uuid]:latest
+        name: workshop-example:latest
     resources: {}
     source:
       git:
         ref: master
-        uri: https://github.com/orangekmt/workshop-[user_uuid].git
+        uri: https://github.com/orangekmt/workshop-example.git
       type: Git
     strategy:
       sourceStrategy:
@@ -62,12 +62,12 @@ items:
     labels:
       app: workshop
       third: frontend
-    name: workshop-[user_uuid]
+    name: workshop-example
   spec:
     replicas: 1
     selector:
       app: workshop
-      deploymentconfig: workshop-[user_uuid]
+      deploymentconfig: workshop-example
     strategy:
       resources: {}
     template:
@@ -78,11 +78,11 @@ items:
         labels:
           app: workshop
           third: frontend
-          deploymentconfig: workshop-[user_uuid]
+          deploymentconfig: workshop-example
       spec:
         containers:
-        - image: library/workshop-[user_uuid]:latest
-          name: workshop-[user_uuid]
+        - image: library/workshop-example:latest
+          name: workshop-example
           ports:
           - containerPort: 8080
             protocol: TCP
@@ -94,10 +94,10 @@ items:
     - imageChangeParams:
         automatic: true
         containerNames:
-        - workshop-[user_uuid]
+        - workshop-example
         from:
           kind: ImageStreamTag
-          name: workshop-[user_uuid]:latest
+          name: workshop-example:latest
       type: ImageChange
   status: {}
 - apiVersion: v1
@@ -109,7 +109,7 @@ items:
     labels:
       app: workshop
       third: frontend
-    name: workshop-[user_uuid]
+    name: workshop-example
   spec:
     ports:
     - name: 8080-tcp
@@ -122,7 +122,7 @@ items:
       targetPort: 8443
     selector:
       app: workshop
-      deploymentconfig: workshop-[user_uuid]
+      deploymentconfig: workshop-example
   status:
     loadBalancer: {}
 - apiVersion: v1
@@ -134,14 +134,14 @@ items:
     labels:
       app: workshop
       third: frontend
-    name: workshop-[user_uuid]
+    name: workshop-example
   spec:
-    host: workshop-[user_uuid].kmt-beta.orange-labs.fr
+    host: workshop-example.kmt-beta.orange-labs.fr
     port:
       targetPort: "8080"
     to:
       kind: Service
-      name: workshop-[user_uuid]
+      name: workshop-example
 metadata: {}
 kind: List
 metadata: {}
