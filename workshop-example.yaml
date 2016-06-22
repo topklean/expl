@@ -7,7 +7,7 @@
   metadata: 
     name: "workshop-example"
     annotations: 
-      description: "An example PrestaShop application"
+      description: "An example To Do List Application"
       tags: "instant-app,jboss,workshop"
       iconClass: "icon-jboss"
   labels: 
