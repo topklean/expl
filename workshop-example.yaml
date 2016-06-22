@@ -32,7 +32,7 @@
         source: 
           type: "Git"
           git: 
-            uri: "https://github.com/orangekmt/workshop-example.git"
+            uri: "${SOURCE_REPOSITORY_URL}"
             ref: "master"
         strategy: 
           type: "Source"
@@ -52,7 +52,7 @@
             configChange: {}
           - type: "GitHub"
             github: 
-              secret: "ZjV0qsZFdN15K7iE0o96"
+              secret: "${GITHUB_WEBHOOK_SECRET}"
 ###################
 # Layer 2: Images #
 ###################	  	  
@@ -166,3 +166,12 @@
       description: "The name assigned to all of the objects defined in this template."
       required: true
       value: "workshop-example"
+    - name: "SOURCE_REPOSITORY_URL"
+      displayName: "Git Repository URL"
+      description: "The URL of the repository with your application source code."
+      value: "https://github.com/orangekmt/workshop-example.git"
+    - name: "GITHUB_WEBHOOK_SECRET"
+      displayName: "GitHub Webhook Secret"
+      description: "A secret string used to configure the GitHub webhook."
+      generate: "expression"
+      from: "[a-zA-Z0-9]{40}"
