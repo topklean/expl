@@ -5,7 +5,7 @@
   kind: "Template"
   apiVersion: "v1"
   metadata: 
-    name: "${APPLICATION_NAME}"
+    name: "workshop-example"
     annotations: 
       description: "An example PrestaShop application"
       tags: "instant-app,jboss,workshop"
