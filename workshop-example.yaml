@@ -92,13 +92,6 @@
       spec:  
         strategy: 
           type: "Rolling"
-          recreateParams: 
-            pre: 
-              failurePolicy: "Retry"
-              execNewPod: 
-                command: 
-                  - "./migrate-database.sh"
-                containerName: "workshop-example"
         triggers: 
           - 
             type: "ImageChange"
