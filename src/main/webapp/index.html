@@ -28,7 +28,7 @@
 					<strong>Error : </strong>{{error}}
 				</span>
 				<header id="header">
-					<h1>To Do List</h1>
+					<h1>ToDo List</h1>
 					<form id="todo-form" ng-submit="addTodo()">
 						<input id="new-todo" placeholder="What needs to be done?" ng-model="newTodo" autofocus>
 					</form>
@@ -98,8 +98,8 @@
                             It raise an error ? You may need to watch server logs.
                         </p>
                         <p>
-                            <NOBR><code class="cmd">oc get pods | grep Running</code>   <i>Copy the name of your pod (ex: workshop-2-djfht)</i></NOBR><br/>
-                            <NOBR><code class="cmd">oc logs workshop-USER_UUID-X-XXXXX</code>   <i>Kubernetes will automatically start an other pod</i></NOBR>
+                            <NOBR><code class="cmd">oc get pods | grep Running</code>   <i>Copy the name of your pod (ex: workshop-example-1-4u8qs)</i></NOBR><br/>
+                            <NOBR><code class="cmd">oc logs workshop-example-X-XXXXX</code> </NOBR>
                         </p>
                         <p>
                             <img style='width:360px' src='errorlogs.png'/>
@@ -123,13 +123,12 @@
                             </i>
                         </p>
                         <p>
-                            <NOBR><code class="cmd">oc get pods | grep Running</code> <i>Copy the name of your pod (ex: workshop-2-djfht)</i><NOBR><br/>
-                            <NOBR><code class="cmd">oc stop pod workshop-USER_UUID-X-XXXXX</code> <i>Kubernetes will automatically start an other pod</i><NOBR>
+                            <NOBR><code class="cmd">oc get pods | grep Running</code> <i>Copy the name of your pod (ex: workshop-example-1-4u8qs)</i><NOBR><br/>
+                            <NOBR><code class="cmd">oc stop pod workshop-example-X-XXXXX</code> <i>Kubernetes will automatically start another pod</i><NOBR>
                         </p>
                         <p>
                             Wait a bit, and then refresh your workshop application web page<br />
                             Saved tasks are no more available.<br />
-                            To avoid this problem, we can add <b>MySQL</b> support, to store tasks.
                         </p>
                     </div>
                     <div data-tour-step="5" title="Create a MySQL service">
@@ -151,13 +150,13 @@
                         <p>Now you have to inject the MySQL environment variables into your workshop application; execute the following commands:</p>
                         <p>
                             <code class="cmd">oc get pods | grep Running|grep workshop-db</code><i>&nbsp;# to get your workshop-db application pod name</i><br/>
-                            <code class="cmd">oc get deploymentconfigs | grep workshop-USER_UUID</code><i>&nbsp;# to get your workshop application deployment config name</i><br/>
-                            <code class="cmd">oc exec workshop-db-Y-YYYYY env | grep 'MYSQL_\|WORKSHOP_DB' | oc env dc/workshop-USER_UUID -e -</code>
+                            <code class="cmd">oc get deploymentconfigs | grep workshop-example</code><i>&nbsp;# to get your workshop application deployment config name</i><br/>
+                            <code class="cmd">oc exec workshop-db-Y-YYYYY env | grep 'MYSQL_\|WORKSHOP_DB' | oc env dc/workshop-example -e -</code>
                         </p>
                         <p>To check if environment variable have been injected in workshop application :</p>
                         <p>
-                            <code class="cmd">oc get pods | grep Running|grep workshop-USER_UUID</code>   <i># get your workshop pod name</i><br/>
-                            <code class="cmd">oc exec workshop-USER_UUID-X-XXXXX env | grep 'MYSQL\|WORKSHOP_DB_'</code>
+                            <code class="cmd">oc get pods | grep Running|grep workshop-example</code>   <i># get your workshop pod name</i><br/>
+                            <code class="cmd">oc exec workshop-example-X-XXXXX env | grep 'MYSQL\|WORKSHOP_DB_'</code>
                         </p>
                         <p>This will display the following output :</p>
                         <p>
@@ -190,7 +189,7 @@
                     <div data-tour-step="7" title="Rebuild your application">
                         <p>To deploy your application with the new release of your code, you just need to rebuild it. If build is successfull, then your new application relase will be automaticcaly deployed</p>
                         <p>
-                            <code class="cmd">oc start-build workshop-USER_UUID</code>
+                            <code class="cmd">oc start-build workshop-example</code>
                         </p>
                         <p>Once the build/deployment finished, reload your browser.</p>
                         <p>All your tasks disapeared</p>
@@ -198,7 +197,7 @@
                         <p>Stop your workshop application</p>
                         <p>
                             <span class="linefeed"><code class="cmd">oc get pods | grep Running</code>   <i># get the name of your workshop running pod</i><br/></span>
-                            <code class="cmd">oc stop pod workshop-USER_UUID-X-XXXXX</code>
+                            <code class="cmd">oc stop pod workshop-example-X-XXXXX</code>
 
                         </p>
                         <p>Your pod will be stopped and recreated automatically.</p>
