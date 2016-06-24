@@ -8,7 +8,7 @@
     name: "workshop-example"
     annotations: 
       description: "An example To Do List Application"
-      tags: "instant-app,jboss,workshop"
+      tags: "instant-app,jboss,workshop,kermit"
       iconClass: "icon-jboss"
   labels: 
     template: "workshop-example"
@@ -52,7 +52,10 @@
             configChange: {}
           - type: "GitHub"
             github: 
-              secret: "${GITHUB_WEBHOOK_SECRET}"
+              secret: "${WEBHOOK_SECRET}"
+          - type: "Generic"
+            generic: 
+              secret: "${WEBHOOK_SECRET}"
 ###################
 # Layer 2: Images #
 ###################	  	  
@@ -170,8 +173,8 @@
       displayName: "Git Repository URL"
       description: "The URL of the repository with your application source code."
       value: "https://github.com/orangekmt/workshop-example.git"
-    - name: "GITHUB_WEBHOOK_SECRET"
-      displayName: "GitHub Webhook Secret"
-      description: "A secret string used to configure the GitHub webhook."
+    - name: "WEBHOOK_SECRET"
+      displayName: "Git Webhook Secret"
+      description: "A secret string used to configure the Git webhook."
       generate: "expression"
       from: "[a-zA-Z0-9]{40}"
