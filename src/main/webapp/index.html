@@ -89,169 +89,44 @@
 						<p>Add, delete, close, or update tasks.</p>
 						<p>Once you understood the todo list behaviors, go to next step.</p>
 					</div>
-                    <div data-tour-step="2" title="Play with your application">
-                        <p>Try to add the following task:</p>
-                        <p>
-                            <b>'Cancel my Orange subscription'</b>
-                        </p>
-                        <p>
-                            It raise an error ? You may need to watch server logs.
-                        </p>
-                        <p>
-                            <NOBR><code class="cmd">oc get pods | grep Running</code>   <i>Copy the name of your pod (ex: workshop-example-1-4u8qs)</i></NOBR><br/>
-                            <NOBR><code class="cmd">oc logs workshop-example-X-XXXXX</code> </NOBR>
-                        </p>
-                        <p>
-                            <img style='width:360px' src='errorlogs.png'/>
-                        </p>
+                    <div data-tour-step="2" title="Check your application builds">
+                        <p>Go to the Web Console and select Browse/Builds</p>
+                        <p>Here you can find additional information about the build configuration and the triggers.</p>
+						<p>Also you can check the logs for details.</p>
+                        <p>Or you can rebuild (restart the building process). </p>
                     </div>
-                    <div data-tour-step="3" title="Play with your application (solution)">
-                        <p>You did not understand the previous step ? </p>
-                        <p>To understand, watch the <code>validate</code> method in the source code of the workshop application</p>
-                        <p><b>src/main/java/com/orange/todolist/TodoStorage.java</b></p>
+                    <div data-tour-step="3" title="Check your application deployments">
+                        <p>Go to the Web Console and select Browse/Deployments</p>
+                        <p>Here you can find additional information about the deploy configuration and the triggers.</p>
+						<p>Also you can check the logs for details.</p>
+                        <p>Or you can redeploy (restart the deploy process). </p>
                     </div>
-                    <div data-tour-step="4" title="I store, you store, ...">
-                        <p>
-                            Currently, tasks are only stored while application is running.
-                        </p>
-                        <p>
-                            <span style='color:red;'>If you stop your application, all datas will be lost.</span>
-                        </p>
-                        <p>
-                            <i>
-                                Note : you can try to stop your application
-                            </i>
-                        </p>
-                        <p>
-                            <NOBR><code class="cmd">oc get pods | grep Running</code> <i>Copy the name of your pod (ex: workshop-example-1-4u8qs)</i><NOBR><br/>
-                            <NOBR><code class="cmd">oc stop pod workshop-example-X-XXXXX</code> <i>Kubernetes will automatically start another pod</i><NOBR>
-                        </p>
-                        <p>
-                            Wait a bit, and then refresh your workshop application web page<br />
-                            Saved tasks are no more available.<br />
-                        </p>
+                    <div data-tour-step="4" title="Check Events">
+                        <p>Go to the Web Console and select Browse/Events:</p>
+						<p>Here you can find the history of your application lifecycle.</p>
                     </div>
-                    <div data-tour-step="5" title="Create a MySQL service">
-                        <p>To add MySQL support to our Todo list, you have to create a MySQL service</p>
-                        <p>On your X/Dos terminal execute the following command:</p>
-                        <p>
-                            <code class="cmd">oc new-app mysql --name="workshop-db" </code>
-														<code class="cmd">-e MYSQL_USER=workshop_user -e MYSQL_PASSWORD=workshop_pwd -e MYSQL_DATABASE=workshop_db </code>
-														<code class="cmd">-l app=workshop,third=database</code>
-                        </p>
-												 <p>Once the MySQL service is deployed, you will have something like this:</p>
-												<p>
-													<code class="cmd">$ oc get pods</code><br/>
-													<code class="cmd">NAME                        READY     STATUS      RESTARTS   AGE</code><br/>
-													<code class="cmd">workshop-db-1-juhmt         1/1       Running     0          13s</code><br/>
-													<code class="cmd">workshop-jeab6971-1-luqvt   1/1       Running     0          1m</code><br/>
-													<code class="cmd">workshop-jeab6971-2-build   0/1       Completed   0          2m</code><br/>
-												</p>
-                        <p>Now you have to inject the MySQL environment variables into your workshop application; execute the following commands:</p>
-                        <p>
-                            <code class="cmd">oc get pods | grep Running|grep workshop-db</code><i>&nbsp;# to get your workshop-db application pod name</i><br/>
-                            <code class="cmd">oc get deploymentconfigs | grep workshop-example</code><i>&nbsp;# to get your workshop application deployment config name</i><br/>
-                            <code class="cmd">oc exec workshop-db-Y-YYYYY env | grep 'MYSQL_\|WORKSHOP_DB' | oc env dc/workshop-example -e -</code>
-                        </p>
-                        <p>To check if environment variable have been injected in workshop application :</p>
-                        <p>
-                            <code class="cmd">oc get pods | grep Running|grep workshop-example</code>   <i># get your workshop pod name</i><br/>
-                            <code class="cmd">oc exec workshop-example-X-XXXXX env | grep 'MYSQL\|WORKSHOP_DB_'</code>
-                        </p>
-                        <p>This will display the following output :</p>
-                        <p>
-														<code class="cmd">MYSQL_DATABASE=workshop_db</code><br/>
-														<code class="cmd">MYSQL_PASSWORD=workshop_pwd</code><br/>
-														<code class="cmd">MYSQL_USER=workshop_user</code><br/>
-														<code class="cmd">WORKSHOP_DB_PORT_3306_TCP_PROTO=tcp</code><br/>
-														<code class="cmd">WORKSHOP_DB_PORT=tcp://172.30.123.111:3306</code><br/>
-														<code class="cmd">WORKSHOP_DB_PORT_3306_TCP=tcp://172.30.123.111:3306</code><br/>
-														<code class="cmd">WORKSHOP_DB_SERVICE_HOST=172.30.123.111</code><br/>
-														<code class="cmd">WORKSHOP_DB_SERVICE_PORT=3306</code><br/>
-														<code class="cmd">WORKSHOP_DB_PORT_3306_TCP_ADDR=172.30.123.111</code><br/>
-														<code class="cmd">WORKSHOP_DB_SERVICE_PORT_3306_TCP=3306</code><br/>
-														<code class="cmd">WORKSHOP_DB_PORT_3306_TCP_PORT=3306</code><br/>
-														<code class="cmd">MYSQL_VERSION=5.6</code><br/>
-														<code class="cmd">MYSQL_PREFIX=/opt/rh/rh-mysql56/root/usr</code><br/>
-                        </p>
+                    <div data-tour-step="5" title="Check Image Streams">
+                        <p>Go to the Web Console and select Browse/Image Streams:</p>
+						<p>Here you can find some informations about the docker images used.</p>
                     </div>
-                    <div data-tour-step="6" title="Update source code to support MySQL">
-                        <p>Add MySQL service is not enought to be able to store tasks</p>
-                        <p>You need to update your java source code</p>
-                        <p>In the <b>getStorageService</b> method of <b>src/main/java/com/orange/todolist/TodosServlet.java</b> class</p>
-                        <p>Comment the use of <b>TodoStorageInMemory</b> and uncomment the rest of the method <b>TodoStorageJDBCMysql</b>)</p>
-                        <p>Save your file, and commit/push your modification on your github repository</p>
-                        <p>
-                            <code class="cmd">git commit -am "Activate MySQL storage"</code>
-                            <code class="cmd">git push origin master</code>
-                        </p>
+                    <div data-tour-step="6" title="Check Pods">
+                        <p>Go to the Web Console and select Browse/Pods:</p>
+						<p>Here you can find the list of pods used in building and deploying your application.</p>
                     </div>
-                    <div data-tour-step="7" title="Rebuild your application">
-                        <p>To deploy your application with the new release of your code, you just need to rebuild it. If build is successfull, then your new application relase will be automaticcaly deployed</p>
-                        <p>
-                            <code class="cmd">oc start-build workshop-example</code>
-                        </p>
-                        <p>Once the build/deployment finished, reload your browser.</p>
-                        <p>All your tasks disapeared</p>
-                        <p>Create others tasks</p>
-                        <p>Stop your workshop application</p>
-                        <p>
-                            <span class="linefeed"><code class="cmd">oc get pods | grep Running</code>   <i># get the name of your workshop running pod</i><br/></span>
-                            <code class="cmd">oc stop pod workshop-example-X-XXXXX</code>
-
-                        </p>
-                        <p>Your pod will be stopped and recreated automatically.</p>
-                        <p>Reload your browser. Your tasks are still present, and have been store in mysql database.</p>
-                     </div>
-					<div data-tour-step="8" title="Mysql Ephemeral storage">
-						<p>At this time we created an application with a MySQL database to store tasks. Unfortunatly we use an ephemeral mysql storage. Indeed if we stop our mysql pod, we will loose all our database content.</p>
-						<p>To confirm it, stop your mysql database pod :</p>
-                        <p>
-                            <span class="linefeed"><code class="cmd">oc get pods | grep Running</code>   <i># get the mysql running pod name</i><br/></span>
-                            <code class="cmd">oc stop pod workshop-db-Y-YYYYYY</code>
-                        </p>
-                        <p>Reload your browser. All your tasks disapeared.</p>
-                        <p>To avoid this we need persistent storage.</p>
-			        </div>
-                    <div data-tour-step="9" title="Use Mysql persistant storage">
-                        <p>First get the name of the volume:</p>
-												<p>
-                            <code class="cmd">oc volume dc/workshop-db --list</code><br />
-												</p>
-												<p>Output::</p>
-												<p>
-                            <code class="cmd">deploymentconfigs/workshop-db</code><br />
-														<code class="cmd">&nbsp;&nbsp;empty directory as <FONT COLOR="red" >workshop-db-volume-1</FONT></code><br />
-														<code class="cmd">&nbsp;&nbsp;&nbsp;&nbsp;mounted at <FONT COLOR="blue" >/var/lib/mysql/data</FONT></code><br />
-														<code class="cmd">&nbsp;&nbsp;empty directory as workshop-db-volume-2</code><br />
-														<code class="cmd">&nbsp;&nbsp;&nbsp;&nbsp;mounted at /run</code><br />
-                        </p>
-												<p>The output show that this pod use 2 volumes and the directory /var/lib/mysql/data is on workshop-db-volume-1.</p>
-												<p>Then make your data persistent. In the command bellow, replace workshop-db-volume-X by your own value. After launching the command, look at what hapen in the overview window of the console.</p>
-												<p>
-													<code class="cmd">oc volume dc/workshop-db --add --name=<FONT COLOR="red" >workshop-db-volume-X </FONT></code>
-													<code class="cmd">-t pvc --claim-name=pvc1 --claim-size=3G </code>
-													<code class="cmd">--claim-mode=ReadWriteMany --overwrite</code>
-												</p>
-												<p>In the web console, you can see a new pod appearing and then the old one disapear: a "build config" object is created wich create an image. Then a 'deploy config' customyze your app. Finally the resulting pod is launched and appear running. And all those steps are done inside diffrent containers!</p>
-												<p>Now if you launch this command again:</p>
-												<p>
-													<code class="cmd">oc volume dc/workshop-db --list</code>
-												</p>
-												<p>"empty directory" (ephemeral storage in openshift) has been replaced by the physical volume claim :</p>
-												<p>
-														<code class="cmd">&nbsp;&nbsp;empty directory as workshop-db-volume-1</code><br />
-														<code class="cmd">&nbsp;&nbsp;&nbsp;&nbsp;<FONT COLOR="red" >pvc/pvc1 (allocated 3GiB)</FONT> as mysqldb-jlb-volume-1</code><br />
-														<code class="cmd">&nbsp;&nbsp;empty directory as workshop-db-volume-2</code><br />
-														<code class="cmd">&nbsp;&nbsp;&nbsp;&nbsp;mounted at /run</code>
-												</p>
-												<p>You can also check the persistence by login into your pod with this command:</p>
-												<p>
-													<code class="cmd">oc exec workshop-db-Y-YYYYY -it bash</code>
-												</p>
+                    <div data-tour-step="7" title="Check Routes">
+                        <p>Go to the Web Console and select Browse/Routes:</p>
+						<p>Here you can find the route that exposes a service by giving it an externally-reachable hostname.</p>
+                    </div>
+                    <div data-tour-step="8" title="Check Services">
+                        <p>Go to the Web Console and select Browse/Services:</p>
+						<p>Here you can find details about the services.</p>
+                    </div>
+                    <div data-tour-step="9" title="Check Storage">
+                        <p>Go to the Web Console and select Browse/Storage:</p>
+						<p>Here you can check the persistent volume claims.</p>
                     </div>
 					<div data-tour-step="10" title="Thanks">
-						<!-- <p>If you want to learn more, go on Bonus...</p> -->
+						 <p>If you want to learn more, go on to the <a href="http://kermit-docker.rd.francetelecom.fr/knowledge-base/1-hour-tutorial-2/">TodoMVC</a></p>
 					</div>
 				</section>
 				<section  data-tour="bonus" style="display:none">
@@ -346,8 +221,8 @@
 		
 		<section class="logo">
 			<span>
-				<div>Librement inspiré de <a href="http://todomvc.com">TodoMVC</a></div>
-				<div>Contacter l'équipe <a href="mailto:codex.kermit-support@rd.francetelecom.com">Kermit</a></div>
+				<div>App inspired by <a href="http://todomvc.com">TodoMVC</a></div>
+				<div>Contact <a href="mailto:codex.kermit-support@rd.francetelecom.com">Kermit Team</a></div>
 			</span>
 			<img src="kermit.jpg"></img>
 		</section>
