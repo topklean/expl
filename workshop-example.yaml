@@ -41,6 +41,9 @@
               kind: "ImageStreamTag"
               namespace: "openshift"
               name: "jboss-webserver30-tomcat7-openshift:latest"
+            env:
+              - name: MAVEN_ARGS_APPEND
+                value: '-Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true'
         output: 
           to: 
             kind: "ImageStreamTag"
