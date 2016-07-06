@@ -18,48 +18,6 @@
 #############################
 
 ###################
-# Layer 1: Builds #
-###################
-    - kind: "BuildConfig"
-      apiVersion: "v1"
-      metadata: 
-        name: "${APPLICATION_NAME}"
-        annotations: 
-          description: "Defines how to build the application"
-      labels:
-        application: "${APPLICATION_NAME}"
-      spec: 
-        source: 
-          type: "Git"
-          git: 
-            uri: "${SOURCE_REPOSITORY_URL}"
-            ref: "master"
-        strategy: 
-          type: "Source"
-          sourceStrategy: 
-            from: 
-              kind: "ImageStreamTag"
-              namespace: "openshift"
-              name: "jboss-webserver30-tomcat7-openshift:latest"
-            env:
-              - name: MAVEN_ARGS_APPEND
-                value: '-Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true'
-        output: 
-          to: 
-            kind: "ImageStreamTag"
-            name: "${APPLICATION_NAME}:latest"
-        triggers: 
-          - type: "ImageChange"
-            imageChange: {}
-          - type: "ConfigChange"
-            configChange: {}
-          - type: "GitHub"
-            github: 
-              secret: "${WEBHOOK_SECRET}"
-          - type: "Generic"
-            generic: 
-              secret: "${WEBHOOK_SECRET}"
-###################
 # Layer 2: Images #
 ###################	  	  
     - kind: "ImageStream"
@@ -163,6 +121,48 @@
         to: 
           kind: "Service"
           name: "${APPLICATION_NAME}"
+###################
+# Layer 1: Builds #
+###################
+    - kind: "BuildConfig"
+      apiVersion: "v1"
+      metadata: 
+        name: "${APPLICATION_NAME}"
+        annotations: 
+          description: "Defines how to build the application"
+      labels:
+        application: "${APPLICATION_NAME}"
+      spec: 
+        source: 
+          type: "Git"
+          git: 
+            uri: "${SOURCE_REPOSITORY_URL}"
+            ref: "master"
+        strategy: 
+          type: "Source"
+          sourceStrategy: 
+            from: 
+              kind: "ImageStreamTag"
+              namespace: "openshift"
+              name: "jboss-webserver30-tomcat7-openshift:latest"
+            env:
+              - name: MAVEN_ARGS_APPEND
+                value: '-Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true'
+        output: 
+          to: 
+            kind: "ImageStreamTag"
+            name: "${APPLICATION_NAME}:latest"
+        triggers: 
+          - type: "ImageChange"
+            imageChange: {}
+          - type: "ConfigChange"
+            configChange: {}
+          - type: "GitHub"
+            github: 
+              secret: "${WEBHOOK_SECRET}"
+          - type: "Generic"
+            generic: 
+              secret: "${WEBHOOK_SECRET}"
 ##############
 # Parameters #
 ##############
