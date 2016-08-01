@@ -147,7 +147,7 @@
               name: "jboss-webserver30-tomcat7-openshift:latest"
             env:
               - name: MAVEN_ARGS_APPEND
-                value: '-Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true'
+                value: 'package -Popenshift -DskipTest -s settings.xml'
         output: 
           to: 
             kind: "ImageStreamTag"
